@@ -141,8 +141,13 @@
                 <el-dropdown-item command="ts">繁體中文</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
-            <div @mouseover="enter" v-if="mouse" class="connect-wallet package" @click="linkShow">{{ $t('nav-ConnentWallect') }}</div>
-            <div v-if="!mouse" @mouseleave="out" class="connect-wallet-enter package" @click="linkShow">{{ $t('nav-ConnentWallect') }}</div>
+            <div v-if="!connected">
+              <div @mouseover="enter" v-if="mouse" class="connect-wallet package" @click="linkShow">{{ $t('nav-ConnentWallect') }}</div>
+              <div v-if="!mouse" @mouseleave="out" class="connect-wallet-enter package" @click="linkShow">{{ $t('nav-ConnentWallect') }}</div>
+            </div>
+            <div @mouseenter="enter" v-if="connected">
+              <div class="my-nft" @click="linkPackageShow">{{ $t('nav-MyNFT') }}</div>
+            </div>
             <!-- <img
               src="./assets/img/package.png"
               v-if="!connected"

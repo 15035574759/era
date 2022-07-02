@@ -11,6 +11,7 @@ import {
   } from '@/utils/tool'
 import { getCurId } from './inquire'
 import NtfPoolAbi from "./abis/EarnPool.json";
+import IDOAbi from "./abis/IDO.json";
 
 export const Mint =async function (nftName,  res){
     console.log('nftName',nftName);
@@ -748,5 +749,243 @@ export const userFarmsWithdraw = async function ( tokenId ){
       window.newVue.$store.dispatch('changeTradeStatus' , {id:timestamp , val:2, hash:hashInfo})
       reject(err)
     })
+  })
+}
+
+// IDO 100USDT购买1000ANS
+export const IDOPayDeposit = async function ( amount=100, inviter_address='0x0000000000000000000000000000000000000000'){
+  console.log(amount, inviter_address)
+  const address = window.newVue.$store.state.base.address;
+  const contractAddress = CONFIG.IDOToken
+  const contract = new web3.eth.Contract(IDOAbi, contractAddress);
+  // amount = web3.utils.toHex(toWei(amount , 18))
+  amount = web3.utils.toHex(toWei(amount , 18))
+  console.log(amount, inviter_address);
+  let encodedABI = contract.methods.deposit(amount, inviter_address).encodeABI();
+  let timestamp = new Date().getTime().toString()
+  window.newVue.$store.dispatch('createOrderForm' ,{ val:0 , id:timestamp})
+  return new Promise((resolve, reject) => {
+    let hashInfo
+    web3.eth.getTransactionCount(address).then(async transactionNonce => {
+      let gasPrice = await web3.eth.getGasPrice();
+      let estimateGas = await web3.eth.estimateGas({
+        from: address,
+        to: contractAddress,
+        data: encodedABI,
+      })
+      console.log('estimateGas' ,estimateGas)
+      const params = [{
+        from: address,
+        to: contractAddress,
+        data: encodedABI,
+        gasPrice: web3.utils.toHex(gasPrice),
+        gas: web3.utils.toHex(estimateGas),
+        // gas: web3.utils.toHex(5000000),
+      }];
+      web3.eth.sendTransaction(params[0])
+          .on('transactionHash', function (hash) {
+            console.log('hash', hash);
+            if (hash) {
+              hashInfo = hash
+            }
+          })
+          .on('receipt', function (receipt) {
+            window.newVue.$store.dispatch('changeTradeStatus' , { id:timestamp , val:1 , hash:hashInfo})
+            resolve(hashInfo)
+          })
+          .on('error', function (err) {
+            let isUserDeny = err.code === 4001
+            window.newVue.$store.dispatch('changeTradeStatus' , { id:timestamp , val:2, hash:hashInfo, isUserDeny})
+            console.log('err' , err)
+            reject(err)
+          })
+    })
+        .catch(err=>{
+          console.log('Mint',err)
+          // let errStr = err.toString()
+          // let tooClose = errStr.indexOf(overTimeErrMsg) !== -1
+          // let unknow = errStr.indexOf(unknowErrMsg) !== -1
+          // let errType = tooClose ?  'tradetooclose'  : (unknow ?  'unknowErr' : null)
+          // window.newVue.$store.dispatch('changeTradeStatus' , {id:timestamp , val:2, hash:hashInfo ,errType})
+          window.newVue.$store.dispatch('changeTradeStatus' , {id:timestamp , val:2, hash:hashInfo})
+          reject(err)
+        })
+  })
+}
+
+// IDO提取
+export const IDOHarvest = async function ( amount ){
+  console.log(amount)
+  const address = window.newVue.$store.state.base.address;
+  const contractAddress = CONFIG.IDOToken
+  const contract = new web3.eth.Contract(IDOAbi, contractAddress);
+  amount = web3.utils.toHex(toWei(amount , 18))
+  let encodedABI = contract.methods.harvest(amount).encodeABI();
+  let timestamp = new Date().getTime().toString()
+  window.newVue.$store.dispatch('createOrderForm' ,{ val:0 , id:timestamp})
+  return new Promise((resolve, reject) => {
+    let hashInfo
+    web3.eth.getTransactionCount(address).then(async transactionNonce => {
+      let gasPrice = await web3.eth.getGasPrice();
+      let estimateGas = await web3.eth.estimateGas({
+        from: address,
+        to: contractAddress,
+        data: encodedABI,
+      })
+      console.log('estimateGas' ,estimateGas)
+      const params = [{
+        from: address,
+        to: contractAddress,
+        data: encodedABI,
+        gasPrice: web3.utils.toHex(gasPrice),
+        gas: web3.utils.toHex(estimateGas),
+        // gas: web3.utils.toHex(5000000),
+      }];
+      web3.eth.sendTransaction(params[0])
+          .on('transactionHash', function (hash) {
+            console.log('hash', hash);
+            if (hash) {
+              hashInfo = hash
+            }
+          })
+          .on('receipt', function (receipt) {
+            window.newVue.$store.dispatch('changeTradeStatus' , { id:timestamp , val:1 , hash:hashInfo})
+            resolve(hashInfo)
+          })
+          .on('error', function (err) {
+            let isUserDeny = err.code === 4001
+            window.newVue.$store.dispatch('changeTradeStatus' , { id:timestamp , val:2, hash:hashInfo, isUserDeny})
+            console.log('err' , err)
+            reject(err)
+          })
+    })
+        .catch(err=>{
+          console.log('Mint',err)
+          // let errStr = err.toString()
+          // let tooClose = errStr.indexOf(overTimeErrMsg) !== -1
+          // let unknow = errStr.indexOf(unknowErrMsg) !== -1
+          // let errType = tooClose ?  'tradetooclose'  : (unknow ?  'unknowErr' : null)
+          // window.newVue.$store.dispatch('changeTradeStatus' , {id:timestamp , val:2, hash:hashInfo ,errType})
+          window.newVue.$store.dispatch('changeTradeStatus' , {id:timestamp , val:2, hash:hashInfo})
+          reject(err)
+        })
+  })
+}
+
+// IDO USDT 奖励提取
+export const IDOUsdtRewardHarvest = async function ( amount ){
+  console.log(amount)
+  const address = window.newVue.$store.state.base.address;
+  const contractAddress = CONFIG.IDOToken
+  const contract = new web3.eth.Contract(IDOAbi, contractAddress);
+  amount = web3.utils.toHex(toWei(amount , 18))
+  let encodedABI = contract.methods.harvest_reward(amount).encodeABI();
+  let timestamp = new Date().getTime().toString()
+  window.newVue.$store.dispatch('createOrderForm' ,{ val:0 , id:timestamp})
+  return new Promise((resolve, reject) => {
+    let hashInfo
+    web3.eth.getTransactionCount(address).then(async transactionNonce => {
+      let gasPrice = await web3.eth.getGasPrice();
+      let estimateGas = await web3.eth.estimateGas({
+        from: address,
+        to: contractAddress,
+        data: encodedABI,
+      })
+      console.log('estimateGas' ,estimateGas)
+      const params = [{
+        from: address,
+        to: contractAddress,
+        data: encodedABI,
+        gasPrice: web3.utils.toHex(gasPrice),
+        gas: web3.utils.toHex(estimateGas),
+        // gas: web3.utils.toHex(5000000),
+      }];
+      web3.eth.sendTransaction(params[0])
+          .on('transactionHash', function (hash) {
+            console.log('hash', hash);
+            if (hash) {
+              hashInfo = hash
+            }
+          })
+          .on('receipt', function (receipt) {
+            window.newVue.$store.dispatch('changeTradeStatus' , { id:timestamp , val:1 , hash:hashInfo})
+            resolve(hashInfo)
+          })
+          .on('error', function (err) {
+            let isUserDeny = err.code === 4001
+            window.newVue.$store.dispatch('changeTradeStatus' , { id:timestamp , val:2, hash:hashInfo, isUserDeny})
+            console.log('err' , err)
+            reject(err)
+          })
+    })
+        .catch(err=>{
+          console.log('Mint',err)
+          // let errStr = err.toString()
+          // let tooClose = errStr.indexOf(overTimeErrMsg) !== -1
+          // let unknow = errStr.indexOf(unknowErrMsg) !== -1
+          // let errType = tooClose ?  'tradetooclose'  : (unknow ?  'unknowErr' : null)
+          // window.newVue.$store.dispatch('changeTradeStatus' , {id:timestamp , val:2, hash:hashInfo ,errType})
+          window.newVue.$store.dispatch('changeTradeStatus' , {id:timestamp , val:2, hash:hashInfo})
+          reject(err)
+        })
+  })
+}
+
+// IDO ANS 奖励提取
+export const IDOAnsRewardHarvest = async function ( amount ){
+  console.log(amount)
+  const address = window.newVue.$store.state.base.address;
+  const contractAddress = CONFIG.IDOToken
+  const contract = new web3.eth.Contract(IDOAbi, contractAddress);
+  amount = web3.utils.toHex(toWei(amount , 18))
+  let encodedABI = contract.methods.harvest_ANS(amount).encodeABI();
+  let timestamp = new Date().getTime().toString()
+  window.newVue.$store.dispatch('createOrderForm' ,{ val:0 , id:timestamp})
+  return new Promise((resolve, reject) => {
+    let hashInfo
+    web3.eth.getTransactionCount(address).then(async transactionNonce => {
+      let gasPrice = await web3.eth.getGasPrice();
+      let estimateGas = await web3.eth.estimateGas({
+        from: address,
+        to: contractAddress,
+        data: encodedABI,
+      })
+      console.log('estimateGas' ,estimateGas)
+      const params = [{
+        from: address,
+        to: contractAddress,
+        data: encodedABI,
+        gasPrice: web3.utils.toHex(gasPrice),
+        gas: web3.utils.toHex(estimateGas),
+        // gas: web3.utils.toHex(5000000),
+      }];
+      web3.eth.sendTransaction(params[0])
+          .on('transactionHash', function (hash) {
+            console.log('hash', hash);
+            if (hash) {
+              hashInfo = hash
+            }
+          })
+          .on('receipt', function (receipt) {
+            window.newVue.$store.dispatch('changeTradeStatus' , { id:timestamp , val:1 , hash:hashInfo})
+            resolve(hashInfo)
+          })
+          .on('error', function (err) {
+            let isUserDeny = err.code === 4001
+            window.newVue.$store.dispatch('changeTradeStatus' , { id:timestamp , val:2, hash:hashInfo, isUserDeny})
+            console.log('err' , err)
+            reject(err)
+          })
+    })
+        .catch(err=>{
+          console.log('Mint',err)
+          // let errStr = err.toString()
+          // let tooClose = errStr.indexOf(overTimeErrMsg) !== -1
+          // let unknow = errStr.indexOf(unknowErrMsg) !== -1
+          // let errType = tooClose ?  'tradetooclose'  : (unknow ?  'unknowErr' : null)
+          // window.newVue.$store.dispatch('changeTradeStatus' , {id:timestamp , val:2, hash:hashInfo ,errType})
+          window.newVue.$store.dispatch('changeTradeStatus' , {id:timestamp , val:2, hash:hashInfo})
+          reject(err)
+        })
   })
 }

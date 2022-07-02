@@ -54,9 +54,6 @@ export default {
           angelValleyMining:'-',
           totalMining:'-'
         },
-        rewardToken: '0x34195bBB1f6F60AA7D362e9BD1BB452613f480F5',
-        usToken: '0x6Ae9cb5a01c26101B0062D39f9f7Ec7E67D45E15',
-        IDOToken: '0xd466b8D81c39691aBe6D8d3a493440aaF14F5982',
     },
     actions:{
       createOrderForm({commit } , info){

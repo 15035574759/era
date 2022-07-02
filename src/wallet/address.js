@@ -39,6 +39,12 @@ export default {
     "singlePool":"0x6bb595F02E0DaA63C33099e38b8462d9F16Ea02e",
     "nftEarnErc20Pool":"0xc526CE97F6045839b1604Bd1c7217e48122103c7",
     "MintPrice":"0.2",
+    "USDTAddress": "0x55d398326f99059fF775485246999027B3197955",
+
+    "IDORewardToken": "0x31FdBcb7a83195e37e63463bc8774CF08aA6444a",
+    "IDOUsToken": "0x4E4955Df52F0D2148263005d7E31cdB7d012d04a",
+    "IDOToken": "0xd4A911fc6269AC01EA96A7c0695997B3Dc808966",
+    "IDOInvitePool": "0x9F3C057e165475602b0627b146d3Ae26cfDa22Cb",
     nftImgSrc,
     nftName,
     nftPower

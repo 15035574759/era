@@ -19,6 +19,7 @@ import {
   $changeLanguage
 } from "./locale/index";
 import 'element-ui/lib/theme-chalk/index.css'
+import VueClipboard from 'vue-clipboard2'
 import {
   $inputLimit,
   toFixed,
@@ -47,6 +48,7 @@ import less from 'less'
 Vue.use(less)
 Vue.config.productionTip = false
 Vue.mixin(Mixin)
+Vue.use(VueClipboard)
 
 import global_ from './components/global'
 

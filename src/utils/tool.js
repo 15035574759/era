@@ -209,3 +209,17 @@ export function toThousands(num) {
   if (num) { result = num1 + result +  (num.split('.').length > 1 ? '.' + num.split('.')[1] : ''); }
   return result;
 }
+
+export function addressCheck(address) {
+  try {
+    let checksumAddress = web3.utils.toChecksumAddress(address);
+    if(checksumAddress) {
+      let isAddress = web3.utils.isAddress(checksumAddress);
+      if(isAddress) {
+        return true;
+      }
+    }
+  } catch (error) {
+    return false;
+  }
+}

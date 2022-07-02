@@ -10,8 +10,8 @@ export const connectInfo = async () => {
     try {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        // params: [{ chainId: '0x4'  }], 
-        params: [{ chainId: '0x38'  }], 
+        params: [{ chainId: web3.utils.numberToHex(256)  }], 
+        // params: [{ chainId: '0x38'  }], 
       });
       connectInfoDetail()
     } catch (error) {
@@ -22,10 +22,10 @@ export const connectInfo = async () => {
             method: 'wallet_addEthereumChain',
             params: [
               {
-                chainId: '0x38',
-                // chainId: '0x4',
-                rpcUrl: 'https://bsc-dataseed.binance.org/',
-                // rpcUrl: 'https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
+                chainId: web3.utils.numberToHex(256),
+                // chainId: '0x38',
+                // rpcUrl: 'https://bsc-dataseed.binance.org/',
+                rpcUrl: 'https://http-testnet.hecochain.com',
               },
             ],
           });
@@ -108,9 +108,9 @@ export async  function getBaseData(chainId,accounts,address){
   window.newVue.$store.commit("getChainId", chainId);
   window.newVue.$store.commit("getAddress", address);
   window.newVue.$store.commit("isConnected", true);
-  window.newVue.$store.dispatch("getUserNtfs");
-  window.newVue.$store.dispatch("getmarketNtfs");
-  window.newVue.$store.dispatch("getFarmsLPPoolInfo");
-  window.newVue.$store.dispatch("getFarmsNTFStake");
+  // window.newVue.$store.dispatch("getUserNtfs");
+  // window.newVue.$store.dispatch("getmarketNtfs");
+  // window.newVue.$store.dispatch("getFarmsLPPoolInfo");
+  // window.newVue.$store.dispatch("getFarmsNTFStake");
   
 }

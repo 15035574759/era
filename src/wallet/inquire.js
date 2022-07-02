@@ -3,6 +3,7 @@ import DsgNftAbi from "./abis/DsgNft.json"
 import NftMarketAbi from "./abis/nftMarket.json"
 import SinglePoolAbi from "./abis/singlePool.json"
 import NtfPoolAbi from "./abis/EarnPool.json"
+import IDOAbi from "./abis/IDO.json"
 import CONFIG from './address.js'
 import { fromWei , toWei , toThousands } from "../utils/tool";
 
@@ -315,6 +316,78 @@ export  const getFarmNtfAccShare = async function () {
   return amount;
 }
 
+// 获取IDO可领取数量
+export  const getIDOUserInfo = async function () {
+  const account = window.newVue.$store.state.base.address;
+  const contract = new web3.eth.Contract(IDOAbi, CONFIG.IDOToken);
+  let amount = 0;
+  let total = 0;
+  await contract.methods.userInfo(account).call(function (error, result) {
+    if (!error) {
+      if(result.amount) {
+        amount  = fromWei(result.amount , 18)
+      }
+      if(result.total) {
+        total  = fromWei(result.total , 18)
+      }
+      console.log('userInfo' , result )
+    } else   {
+      console.log('userInfo_err',error)
+    }
+  });
+  return {
+    amount: amount,
+    total: total,
+  };
+}
+
+// 获取IDO待释放数量
+export  const getIDOReleasedAmount = async function () {
+  const account = window.newVue.$store.state.base.address;
+  const contract = new web3.eth.Contract(tokenAbi, CONFIG.IDORewardToken);
+  let amount = 0;
+  await contract.methods.balanceOf(CONFIG.IDOToken).call(function (error, result) {
+    console.log('IDO待释放数量：' , result )
+    if (!error) {
+      amount  = fromWei(result , 18)
+    } else   {
+      console.log('balanceOf_err',error)
+    }
+  });
+  return amount;
+}
+
+// 获取ANS奖励数量
+export  const getIDOANSRewardAmount = async function () {
+  const account = window.newVue.$store.state.base.address;
+  const contract = new web3.eth.Contract(IDOAbi, CONFIG.IDOToken);
+  let amount = 0;
+  await contract.methods.rewardAns(account).call(function (error, result) {
+    console.log('ANS奖励数量：' , result )
+    if (!error) {
+      amount  = fromWei(result , 18)
+    } else   {
+      console.log('balanceOf_err',error)
+    }
+  });
+  return amount;
+}
+
+// 获取USDT奖励数量
+export  const getIDOUSDTRewardAmount = async function () {
+  const account = window.newVue.$store.state.base.address;
+  const contract = new web3.eth.Contract(IDOAbi, CONFIG.IDOToken);
+  let amount = 0;
+  await contract.methods.reward(account).call(function (error, result) {
+    console.log('USDT奖励数量：' , result )
+    if (!error) {
+      amount  = fromWei(result , 18)
+    } else   {
+      console.log('balanceOf_err',error)
+    }
+  });
+  return amount;
+}
 
 // export const isNTFApproved = async function (tokenAddress, decimals, amount , otherAddress) {
 //   console.log('检查授权' , amount);

@@ -16,11 +16,12 @@
       <el-row :gutter="20" class="buy-box">
         <el-col :span="screenWidth >= 600 ? 12 : 24">
           <div class="left approved">
-            <div style="text-align: center">100 USDT get 1000 ANS</div>
+            <div style="text-align: center">100 USDT {{ $t('ido-get') }} 1000 ANS</div>
             <div class="approved-pay" v-if="approve">
               <img src="@/assets/img/ido/approved-yes.png" alt width="100" />
               <span>{{$t('ido-Approved')}}</span>&nbsp;&nbsp;
-              <div class="pay-yes">{{ $t('ido-Pay') }}</div>
+              <div v-if="isPay" class="pay-yes" @click="payUsdtOrANS()">{{ $t('ido-Pay') }}</div>
+              <div v-else class="pay-no">{{ $t('ido-Pay') }}</div>
             </div>
             <div class="approved-pay" v-if="!approve">
               <img src="@/assets/img/ido/approved-no.png" alt width="100" />
@@ -33,7 +34,7 @@
                 <img :src="require(`@/assets/img/ido/${approve ? `success-01` : `step-01`}.png`)" alt width="25" />
                 <div class="wire"></div>
                 <!-- <img src="@/assets/img/ido/step-02.png" alt width="20" /> -->
-                <img :src="require(`@/assets/img/ido/step-02.png`)" alt width="25" />
+                <img :src="require(`@/assets/img/ido/${isPay ? `success-01` : `step-02`}.png`)" alt width="25" />
               </div>
               <!-- <el-steps
                 :align-center="true"
@@ -56,15 +57,17 @@
           <div class="right">
             <div style="text-align: center">IDO</div>
             <div class="input" style="width: 100%">
-              <el-input v-model="idoObtainedValue" placeholder="请输入内容">
-                <div slot="suffix" @click="IDOExtractClick()" class="extract">{{ $t('ido-Extract') }}</div>
-                &nbsp;&nbsp;
-                <div slot="suffix" class="details" @click="IDODetailsClick()">{{ $t('ido-Details') }}</div>
+              <el-input v-model="ansObtainedAmount" placeholder="0.00" :readonly="true">
+                <div slot="prefix" class="ans-obtained">ANS {{ $t('ido-obtained') }}</div>
+                <div slot="suffix" v-if="isStartExtract" @click="IDOExtractClick()" class="extract">{{ $t('ido-Extract') }}</div>
+                <!-- &nbsp;&nbsp; -->
+                <!-- <div slot="suffix" class="details" @click="IDODetailsClick()">{{ $t('ido-Details') }}</div> -->
               </el-input>
             </div>
             <div class="input" style="width: 100%">
-              <el-input v-model="idoReleasedValue" placeholder="请输入内容">
-                <div slot="suffix" class="details" @click="IDOReleaseDetailsClick()">{{ $t('ido-Details') }}</div>
+              <el-input v-model="ansReleasedAmount" placeholder="0.00" :readonly="true">
+                <div slot="prefix" class="ans-obtained">ANS {{ $t('ido-to-be-released') }}</div>
+                <!-- <div slot="suffix" class="details" @click="IDOReleaseDetailsClick()">{{ $t('ido-Details') }}</div> -->
               </el-input>
             </div>
           </div>
@@ -83,11 +86,12 @@
           <div class="left">
             <div style="text-align: center">ANS</div>
             <div class="input">
-              <el-input v-model="ansRewardValue" placeholder="请输入内容">
-                <div slot="suffix" class="details" @click="ANSRewardDetailsClick()">{{ $t('ido-Details') }}</div>
+              <el-input v-model="ansRewardAmount" placeholder="0.00" :readonly="true">
+                <div slot="prefix" class="ans-obtained">ANS</div>
+                <!-- <div slot="suffix" class="details" @click="ANSRewardDetailsClick()">{{ $t('ido-Details') }}</div> -->
               </el-input>
             </div>
-            <div class="">
+            <div class="" v-if="isStartExtract">
               <div class="extract-max" @click="ANSExtractClick()">{{ $t('ido-Extract') }}</div>
             </div>
           </div>
@@ -101,8 +105,9 @@
           <div class="right">
             <div style="text-align: center">USDT</div>
             <div class="input">
-              <el-input v-model="usdtRewardValue" placeholder="请输入内容">
-                <div slot="suffix" class="details" @click="USDTRewardDetailsClick()">{{ $t('ido-Details') }}</div>
+              <el-input v-model="usdtRewardAmount" placeholder="0.00" :readonly="true">
+                <div slot="prefix" class="ans-obtained">USDT</div>
+                <!-- <div slot="suffix" class="details" @click="USDTRewardDetailsClick()">{{ $t('ido-Details') }}</div> -->
               </el-input>
             </div>
             <div class="">
@@ -123,10 +128,10 @@
           </div> -->
           <div class="qrcode">
               <div class="qrCodeurl" ref="qrCodeUrl"></div>
-              <div class="address">https://ANS.net/dsdefdewfew'?utm=0x7DCBFF9995AC72222C6d46A45e82aA90B627f36D</div>
+              <div class="address">{{utmAddress}}</div>
           </div>
           <div class="CopyBtn">
-            <div>{{ $t('ido-CopyLink') }}</div>
+            <div v-clipboard:copy="utmAddress" v-clipboard:success="copySuccess">{{ $t('ido-CopyLink') }}</div>
             <div @click="showBind()">{{ $t('ido-BindSuperior') }}</div>
           </div>
         </el-col>
@@ -139,7 +144,8 @@
                 width="20"
               />
             </div> -->
-            <div style="padding-bottom: 20px">{{ value2 }} {{ $t('ido-pushed') }}</div>
+            <div style="padding-bottom: 20px">IDO {{ $t('ido-pushed') }}</div>
+            <div style="color:#70F4A5;font-weight: 800;font-size:24px">5</div>
           </div>
           <div class="details-button">
             <div class="details" @click="showDirect()">{{ $t('ido-DirectPushDetails') }}</div>
@@ -289,11 +295,11 @@
         <div class="main">
           <div class="input">
             <el-row>
-              <el-col :span="12" align="left">111</el-col>
-              <el-col :span="12" align="right">222</el-col>
+              <el-col :span="12" align="left">{{extractDetailsName}} {{ $t('ido-obtained') }}</el-col>
+              <el-col :span="12" align="right">{{ $t('ido-balance') }}: {{ extractBalance }}</el-col>
               <el-col :span="24" align="right" class="number">
-                <el-input v-model="input" placeholder="请输入内容">
-                  <el-button slot="suffix">MAX</el-button>
+                <el-input v-model="extractAmountValue" placeholder="0.00">
+                  <el-button slot="suffix" @click="extractAmountValue = extractBalance">MAX</el-button>
                   <span slot="suffix" class="unit">{{extractDetailsName}}</span>
                 </el-input>
               </el-col>
@@ -301,7 +307,7 @@
           </div>
           <span slot="footer" class="dialog-footer">
             <!-- <el-button type="primary" @click="extractShow = false">确 定</el-button> -->
-            <div class="extract-dialog-max" style="margin: 0 auto">{{ $t('ido-Extract') }}</div>
+            <div class="extract-dialog-max" style="margin: 0 auto" @click="extractStart()">{{ $t('ido-Extract') }}</div>
           </span>
         </div>
       </el-dialog>
@@ -528,23 +534,23 @@
         </div>
           <div class="input">
             <el-row>
-              <el-col v-if="buildHrefAddressValue && buildHrefAddressValue !== ''" :span="24" align="right" class="number">
-                <el-input  v-model="buildHrefAddressValue" placeholder="请输入内容"></el-input>
-              </el-col>
-              <el-col v-else :span="24" align="right" class="number">
-                <el-input  v-model="buildAddressValue" placeholder="请输入内容"></el-input>
+              <!-- <el-col v-if="buildHrefAddressValue && buildHrefAddressValue !== ''" :span="24" align="right" class="number">
+                <el-input  v-model="buildHrefAddressValue" placeholder="0.00"></el-input>
+              </el-col> -->
+              <el-col :span="24" align="right" class="number">
+                <el-input  v-model="utmAddressValue" placeholder="" :readonly="true"></el-input>
               </el-col>
             </el-row>
           </div>
           <span slot="footer" class="dialog-footer">
-            <div class="extract-dialog-max" style="margin: 0 auto" @click="buildSuperiorClick()">Confirm</div>
+            <div class="extract-dialog-max" style="margin: 0 auto" @click="payUsdtOrANS()">{{ $t('ido-confirm') }}</div>
           </span>
       </el-dialog>
 
-      <!-- 点击bind按钮显示内容-->
+      <!-- 点击bind 手动绑定 按钮显示内容-->
       <el-dialog
         :title="$t('ido-BindSuperior')"
-        :visible.sync="showBindState"
+        :visible.sync="showBindAddressShow"
         :width="screenWidth >= 600 ? '30%' : '80%'"
         center
         :show-close="false"
@@ -555,19 +561,19 @@
             src="../../assets/img/close.png"
             alt
             class="close"
-            @click="showBindState = false"
+            @click="showBindAddressShow = false"
           />
         </div>
           <div class="input">
             <el-row>
               <el-col :span="24" align="right" class="number">
-                <el-input v-model="input" placeholder="请输入内容">
+                <el-input v-model="inviteAddress" :placeholder="$t('ido-please-inviter-address')">
                 </el-input>
               </el-col>
             </el-row>
           </div>
           <span slot="footer" class="dialog-footer">
-            <div class="extract-dialog-max" style="margin: 0 auto">Confirm</div>
+            <div class="extract-dialog-max" style="margin: 0 auto" @click="BindAddressClick()">{{ $t('ido-confirm') }}</div>
           </span>
       </el-dialog>
 
@@ -659,8 +665,10 @@
 <script>
 import QRCode from "qrcodejs2";
 import { mapState } from "vuex";
-import { approve, farmsLPApprove } from "@/wallet/trade";
-import {isApproved} from "@/wallet/inquire";
+import { approve, IDOPayDeposit, IDOHarvest, IDOAnsRewardHarvest, IDOUsdtRewardHarvest } from "@/wallet/trade";
+import {isApproved, getIDOUserInfo, getIDOANSRewardAmount, getIDOUSDTRewardAmount} from "@/wallet/inquire";
+import CONFIG from '@/wallet/address.js'
+import {addressCheck} from "../../utils/tool";
 export default {
   components: {},
   computed: {
@@ -673,11 +681,15 @@ export default {
       usToken:state=>state.base.usToken,
       IDOToken:state=>state.base.IDOToken,
     }),
+    utmAddress(){
+        return window.origin + `/#/ido?utm=${this.address}`
+    }
   },
   data() {
     return {
       screenWidth: this.GLOBAL.clientWidth,
-      countDate: "2022-06-30 24:00:00",
+      countDate: "2022-07-02 16:36:00",
+      isStartExtract: false, //是否开始领取
       bannerbjIMg:
         this.GLOBAL.clientWidth >= 600
           ? require(`@/assets/img/ido/header-pc.png`)
@@ -702,6 +714,7 @@ export default {
         30: "30",
       },
       approve: false,
+      isPay: false,
       extractShow: false,
       detailsShow: false,
       IDODetailsShow: false,
@@ -733,13 +746,37 @@ export default {
       }],
       changeGetState:0,  //弹框按钮切换
       showBindState:false, //点击bind按钮
+      showBindAddressShow: false, //点击手动绑定钱包地址弹框
       showDirectState: false,//点击Direct 改
       changeDirectpushState: 0,//状态   改
       aaaa:[1,2,3,4,5,6],//改
       showDirectListState: false,//改
-      buildAddressValue: '',
+      utmAddressValue: '', //邀请人地址 url
       buildHrefAddressValue: '',
+      inviteAddress: '0x0000000000000000000000000000000000000000', //邀请地址
+      payUsdtOrAnsAmount: 100, //usdt or ans 最低 100
+      ansObtainedAmount: 0, //IDO 可领取的数量 
+      ansReleasedAmount: 0, //待释放数量 
+      ansRewardAmount: 0, //ANS奖励数量 
+      usdtRewardAmount: 0, //USDT奖励数量 
+      extractBalance: 0, //输入弹框余额
+      extractAmountValue: 0, //输入弹框输入数量
     };
+  },
+  created() {
+    let inviter_address = this.$route.query.utm;
+    if(inviter_address && inviter_address !== '') {
+      if(!addressCheck(inviter_address)) {
+        this.$notify({
+          message: "邀请地址无效",
+          type: "error",
+        });
+        return false;
+      }
+      this.inviteAddress = inviter_address;
+      this.utmAddressValue = this.utmAddressHref();
+      this.showBindState = true;
+    }
   },
   mounted() {
     this.countTime();
@@ -751,6 +788,7 @@ export default {
       async handler(val){
           if(val){
             this.getIsApprove();
+            this.getIdoAmount();
           }
       }
     },
@@ -759,16 +797,50 @@ export default {
     }
   },
   methods: {
+    utmAddressHref() {
+      return window.location.origin + "?utm=" + this.inviteAddress;
+    },
+    extractStart() { //开始提取
+      this.trading = true;
+      let _contractName = '';
+      if(this.extractAmountValue <= 0) {
+        // this.$notify({
+        //   message: "请输入数量",
+        //   type: "warning",
+        // });
+        return false;
+      }
+      if(this.extractDetailsName === 'IDO') {
+        _contractName = IDOHarvest;
+      }
+      if(this.extractDetailsName === 'ANS') {
+        _contractName = IDOAnsRewardHarvest;
+      }
+      if(this.extractDetailsName === 'USDT') {
+        _contractName = IDOUsdtRewardHarvest;
+      }
+      _contractName(this.extractAmountValue).then(async(hash) => {
+        if(hash) {
+          await this.getIdoAmount();
+          this.extractShow = false;
+        }
+      }).finally(() => {
+        this.trading = false;
+      });
+    },
     IDOExtractClick() { //点击IDO提取
       this.extractDetailsName = "IDO";
+      this.extractBalance = this.ansObtainedAmount;
       this.extractShow = true;
     },
     ANSExtractClick() { //点击ANS提取
       this.extractDetailsName = "ANS";
+      this.extractBalance = this.ansRewardAmount;
       this.extractShow = true;
     },
     USDTExtractClick() { //点击USDT提取
       this.extractDetailsName = "USDT";
+      this.extractBalance = this.usdtRewardAmount;
       this.extractShow = true;
     },
     IDODetailsClick() { //点击IDO明细
@@ -786,25 +858,25 @@ export default {
     getIDODetailsButton(num) {
       this.IDODetailsType = num;
     },
-    buildSuperiorClick() { //Build superior
-      // console.log(this.buildAddressValue);
-      if(this.buildHrefAddressValue && this.buildHrefAddressValue !== '') {
-        this.showBindState = false;
-      } else {
-        if(this.buildAddressValue && this.buildAddressValue !== '') {
-          this.buildHrefAddressValue = window.location.origin + "?utm=" + this.buildAddressValue;
-        }
-      }
-    },
+    // buildSuperiorClick() { //Build superior
+    //   // console.log(this.buildAddressValue);
+    //   if(this.buildHrefAddressValue && this.buildHrefAddressValue !== '') {
+    //     this.showBindState = false;
+    //   } else {
+    //     if(this.buildAddressValue && this.buildAddressValue !== '') {
+    //       this.buildHrefAddressValue = window.location.origin + "?utm=" + this.buildAddressValue;
+    //     }
+    //   }
+    // },
     async getIsApprove() { //获取余额 查看是否授权
-      isApproved(this.usToken, 18, 0, this.rewardToken).then((bool) => {
+      isApproved(CONFIG.IDOUsToken, 18, 0, CONFIG.IDOToken).then((bool) => {
         // console.log("isApprove", bool);
         this.approve = bool ? true : false;
       });
     },
     startApprove() { //批准USDT
       this.trading = true;
-      approve(this.usToken, this.rewardToken).then((hash) => {
+      approve(CONFIG.IDOUsToken, CONFIG.IDOToken).then((hash) => {
         // console.log(result);
         if(hash) {
           this.approve = true;
@@ -813,6 +885,47 @@ export default {
       }).finally(() => {
         this.trading = false;
       });
+    },
+    payUsdtOrANS() { //100 USDT get 1000 ANS
+      this.trading = true;
+      IDOPayDeposit(this.payUsdtOrAnsAmount, this.inviteAddress).then((hash) => {
+        console.log(hash);
+        if(hash) {
+          this.trading = false;
+          this.showBindState = false;
+          this.getIdoAmount();
+        }
+      }).finally(() => {
+        this.trading = false;
+      });
+    },
+    copySuccess() {
+      this.$notify({
+        title: "success",
+        message: "已复制到剪切板",
+        type: "success",
+      });
+    },
+    async getIdoAmount() { //获取IDO数量
+      let ANSObtained = await getIDOUserInfo();
+      let ANSRewardAmount = await getIDOANSRewardAmount();
+      let USDTRewardAmount = await getIDOUSDTRewardAmount();
+      // console.log(ANSRewardAmount, USDTRewardAmount);
+      // let ANSReleasedAmount = await getIDOReleasedAmount();
+      if(ANSObtained.amount > 0) {
+        this.ansObtainedAmount = ANSObtained.amount;
+        this.isPay = true;
+      }
+      if(ANSObtained.total > 0) {
+        this.ansReleasedAmount = ANSObtained.total;
+      }
+      if(ANSRewardAmount > 0) {
+        this.ansRewardAmount = ANSRewardAmount;
+      }
+      if(USDTRewardAmount > 0) {
+        this.usdtRewardAmount = USDTRewardAmount;
+      }
+      // console.log(ANSObtainedAmount);
     },
     // 倒计时事件
     countTime() {
@@ -825,9 +938,10 @@ export default {
         var endTime = endDate.getTime();
         //时间差
         let countTime = endTime - now;
-        if (this.countTime == 0) {
+        if (countTime <= 0) {
           // 计时结束，清除缓存
           clearInterval(this._interval);
+          this.isStartExtract = true;
         } else {
           countTime--;
           let day = parseInt(countTime / 1000 / 60 / 60 / 24);
@@ -855,8 +969,23 @@ export default {
     changeGet(value){
        this.changeGetState = value;
     },
-    showBind(){
-       this.showBindState = true;
+    showBind(){ //点击Bind 手动绑定推荐关系
+       this.showBindAddressShow = true;
+       this.inviteAddress = "";
+    },
+    BindAddressClick() { //点击手动绑定推荐关系确认按钮事假
+      if(this.inviteAddress && this.inviteAddress !== '') {
+        if(!addressCheck(this.inviteAddress)) {
+          this.$notify({
+            message: "邀请地址无效",
+            type: "error",
+          });
+          return false;
+        }
+        this.showBindAddressShow = false;
+        this.showBindState = true;
+        this.utmAddressValue = this.utmAddressHref();
+      }
     },
     showDirect(){ //改
       this.showDirectState = true;
@@ -946,7 +1075,7 @@ export default {
           justify-content: space-around;
           flex-direction: column;
           padding: 20px;
-          height: 200px;
+          height: 250px;
           background-color: #26352c;
           border-radius: 20px;
           // text-align: center;
@@ -997,13 +1126,21 @@ export default {
             width: 70%;
             .el-input__inner {
               background-color: #161d18;
-              height: 70px;
+              height: 90px;
               color: #82d197;
               font-weight: 800;
               //   width: 80%;
               border: unset;
-              line-height: 70px;
+              line-height: 90px;
               border-radius: 100px;
+              padding-top: 20px;
+              .ans-obtained {
+
+              }
+            }
+            .el-input__prefix {
+              left: 30px;
+              top: 20px;
             }
             .el-input__suffix {
               display: flex;
@@ -1023,7 +1160,7 @@ export default {
           justify-content: space-around;
           flex-direction: column;
           padding: 20px;
-          height: 200px;
+          height: 250px;
           // border: 1px solid red;
           background-color: #26352c;
           border-radius: 20px;
@@ -1032,15 +1169,20 @@ export default {
             width: 70%;
             .el-input__inner {
               background-color: #161d18;
-              height: 70px;
+              height: 90px;
               color: #82d197;
               font-weight: 800;
               //   width: 80%;
               border: unset;
-              line-height: 70px;
+              line-height: 90px;
               border-radius: 100px;
               display: flex;
               margin-right: 10px;
+              padding-top: 20px;
+            }
+            .el-input__prefix {
+              left: 30px;
+              top: 20px;
             }
             .el-input__suffix {
               display: flex;
