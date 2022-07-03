@@ -146,24 +146,24 @@
                 />
               </div> -->
               <div style="padding-bottom: 20px">IDO {{ $t('ido-pushed') }}</div>
-              <div style="color:#70F4A5;font-weight: 800;font-size:24px">5</div>
+              <div style="color:#70F4A5;font-weight: 800;font-size:24px"> {{ countNFTReward }} </div>
             </div>
             <div class="details-button">
               <div class="details" @click="showDirect()">{{ $t('ido-DirectPushDetails') }}</div>
             </div>
             <div class="slider">
               <el-slider
-                v-model="value2"
+                v-model="countNFTRewardSlider"
                 :step="1"
                 :max="30"
                 :min="5"
-                show-stops
                 :marks="marks"
+                disabled
               >
               </el-slider>
             </div>
             <div class="badge">
-              <div class="img-05" :style="{opacity: (value2 >= 5 ? 1 : 0.5)}">
+              <div class="img-05" :style="{opacity: (countNFTReward >= 5 ? 1 : 0.5)}">
                 <img
                   class="img-05-1"
                   src="@/assets/img/ido/ForceBadge0.png"
@@ -174,7 +174,7 @@
                 {{ $t('ido-badge-05') }}
               </div>
 
-              <div class="img-10" :style="{opacity: (value2 >= 10? 1:0.5)}">
+              <div class="img-10" :style="{opacity: (countNFTReward >= 10? 1:0.5)}">
                 <img
                   class="img-05-1"
                   src="@/assets/img/ido/ForceBadge1.png"
@@ -184,7 +184,7 @@
                 />
                 {{ $t('ido-badge-10') }}
               </div>
-              <div class="img-15" :style="{opacity: (value2 >= 15? 1:0.5)}">
+              <div class="img-15" :style="{opacity: (countNFTReward >= 15? 1:0.5)}">
                 <img
                   class="img-05-1"
                   src="@/assets/img/ido/ForceBadge2.png"
@@ -194,7 +194,7 @@
                 />
                 {{ $t('ido-badge-15') }}
               </div>
-              <div class="img-20" :style="{opacity: (value2 >= 20? 1:0.5)}">
+              <div class="img-20" :style="{opacity: (countNFTReward >= 20? 1:0.5)}">
                 <img
                   class="img-05-1"
                   src="@/assets/img/ido/ForceBadge3.png"
@@ -204,7 +204,7 @@
                 />
                 {{ $t('ido-badge-20') }}
               </div>
-              <div class="img-25" :style="{opacity: (value2 >= 25? 1:0.5)}">
+              <div class="img-25" :style="{opacity: (countNFTReward >= 25? 1:0.5)}">
                 <img
                   class="img-05-1"
                   src="@/assets/img/ido/ForceBadge4.png"
@@ -213,7 +213,7 @@
                 />
                 {{ $t('ido-badge-25') }}
               </div>
-              <div class="img-30" :style="{opacity: (value2 >= 30? 1:0.5)}">
+              <div class="img-30" :style="{opacity: (countNFTReward >= 30? 1:0.5)}">
                 <img
                   class="img-05-1"
                   src="@/assets/img/ido/ForceBadge5.png"
@@ -224,9 +224,9 @@
               </div>
             </div>
             <div class="receive">
-              <div id="selected">{{ $t('ido-ReceiveNFT') }}</div>
-              <div v-if="screenWidth >= 600">{{ $t('ido-NONFT') }}</div>
-              <div v-if="screenWidth >= 600">{{ $t('ido-NFTReceived') }}</div>
+              <div id="selected" v-if="getNftPushedState()" @click="getIDORemainNft()">{{ $t('ido-ReceiveNFT') }}</div>
+              <div v-else>{{ $t('ido-NONFT') }}</div>
+              <!-- <div v-if="screenWidth >= 600">{{ $t('ido-NFTReceived') }}</div> -->
             </div>
           </el-col>
         </el-row>
@@ -545,12 +545,14 @@
                 <el-input  v-model="buildHrefAddressValue" placeholder="0.00"></el-input>
               </el-col> -->
               <el-col :span="24" align="right" class="number">
-                <el-input  v-model="utmAddressValue" placeholder="" :readonly="true"></el-input>
+                <el-input  v-model="inviteAddress" placeholder="" :readonly="true"></el-input>
               </el-col>
             </el-row>
           </div>
           <span slot="footer" class="dialog-footer">
-            <div class="extract-dialog-max" style="margin: 0 auto" @click="payUsdtOrANS()">{{ $t('ido-confirm') }}</div>
+            <!-- <div class="pay-yes" @click="startApprove()">{{ $t('ido-Approved') }}</div> -->
+            <div v-if="!approve" class="extract-dialog-max" style="margin: 0 auto" @click="startApprove()">{{ $t('ido-Approved') }}</div>
+            <div v-else class="extract-dialog-max" style="margin: 0 auto" @click="payUsdtOrANS()">{{ $t('ido-confirm') }}</div>
           </span>
       </el-dialog>
 
@@ -607,7 +609,7 @@
                 <!-- <div :class="[changeDirectpushState==0?'get':'get-no']" style="margin: 0 auto" @click="changeDirectpush(0)">Direct push</div> -->
                 <div style="color:#fff;"> {{ $t('ido-total-quote') }} </div> 
                 <div class="seeANS">
-                  <div>14509 ANS</div>
+                  <div>0.00 ANS</div>
                 </div>
               </el-col>
               <!-- <el-col :span="24" align="center">
@@ -676,8 +678,8 @@
 <script>
 import QRCode from "qrcodejs2";
 import { mapState } from "vuex";
-import { approve, IDOPayDeposit, IDOHarvest, IDOAnsRewardHarvest, IDOUsdtRewardHarvest } from "@/wallet/trade";
-import {isApproved, getIDOUserInfo, getIDOANSRewardAmount, getIDOUSDTRewardAmount, getIDOOneLevelLists} from "@/wallet/inquire";
+import { approve, IDOPayDeposit, IDOHarvest, IDOAnsRewardHarvest, IDOUsdtRewardHarvest, IDOClaimNftReward } from "@/wallet/trade";
+import {isApproved, getIDOUserInfo, getIDOANSRewardAmount, getIDOUSDTRewardAmount, getIDOOneLevelLists, getIDORemainNft} from "@/wallet/inquire";
 import CONFIG from '@/wallet/address.js'
 import {addressCheck} from "../../utils/tool";
 export default {
@@ -712,7 +714,7 @@ export default {
       min: 0,
       sec: 0,
       input: "",
-      value2: 0,
+      value2: 11,
       idoObtainedValue: 14509,
       idoReleasedValue: 3000,
       ansRewardValue: 3000,
@@ -773,6 +775,9 @@ export default {
       usdtRewardAmount: 0, //USDT奖励数量 
       extractBalance: 0, //输入弹框余额
       extractAmountValue: 0, //输入弹框输入数量
+      remainingNFTReward: 0, //剩余NFT奖励
+      countNFTReward: 0, //总的NFT奖励
+      countNFTRewardSlider: 0,
     };
   },
   created() {
@@ -912,6 +917,18 @@ export default {
         this.trading = false;
       });
     },
+    getIDORemainNft() { //领取NFT奖励
+      if(this.getNftPushedState()) {
+        IDOClaimNftReward(this.remainingNFTReward).then((hash) => {
+          if(hash) {
+            this.trading = false;
+            this.getIdoAmount();
+          }
+        }).finally(() => {
+          this.trading = false;
+        });
+      }
+    },
     copySuccess() {
       this.$notify({
         title: "success",
@@ -923,6 +940,8 @@ export default {
       let ANSObtained = await getIDOUserInfo();
       let ANSRewardAmount = await getIDOANSRewardAmount();
       let USDTRewardAmount = await getIDOUSDTRewardAmount();
+      let iDORemainNft = await getIDORemainNft();
+      console.log(iDORemainNft);
       // console.log(ANSRewardAmount, USDTRewardAmount);
       // let ANSReleasedAmount = await getIDOReleasedAmount();
       if(ANSObtained.amount > 0) {
@@ -938,7 +957,26 @@ export default {
       if(USDTRewardAmount > 0) {
         this.usdtRewardAmount = USDTRewardAmount;
       }
+      if(iDORemainNft && iDORemainNft.balance) {
+        this.remainingNFTReward = Number(iDORemainNft.balance);
+      }
+      if(iDORemainNft && iDORemainNft.countBalance) {
+        this.countNFTReward = Number(iDORemainNft.countBalance) * 5;
+        this.countNFTRewardSlider = Number(iDORemainNft.countBalance) >= 1 ? Number(iDORemainNft.countBalance) * 5 : 0;
+      }
       // console.log(ANSObtainedAmount);
+    },
+    getNftPushedState() { //判断是否可以领取
+      if(this.countNFTReward > 0) {
+        if(this.countNFTReward == 5 || this.countNFTReward == 10 || this.countNFTReward == 15 || this.countNFTReward == 20 || this.countNFTReward == 25 || this.countNFTReward == 30) {
+          console.log(this.countNFTReward);
+          return true;
+        } else {
+          console.log(this.countNFTReward);
+          return false;
+        }
+      }
+      return false;
     },
     // 倒计时事件
     countTime() {
@@ -1063,7 +1101,7 @@ export default {
           background: url(../../assets/img/ido/countdown.png) no-repeat center;
           background-size: contain;
           width: 350px;
-          height: 150px;
+          height: 124px;
           // padding-top: 22px;
           color: #333;
           text-align: center;
@@ -1274,6 +1312,9 @@ export default {
           .button {
             float: left;
             margin-left: 20px;
+          }
+          .el-slider__runway.disabled .el-slider__bar {
+            background-color:rgb(112, 244, 165);
           }
         }
         .badge {

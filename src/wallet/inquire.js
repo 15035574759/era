@@ -5,6 +5,7 @@ import SinglePoolAbi from "./abis/singlePool.json"
 import NtfPoolAbi from "./abis/EarnPool.json"
 import IDOAbi from "./abis/IDO.json"
 import IDOInvitePoolABI from "./abis/invitePool.json"
+import IDODsgNftABI from "./abis/IDODsgNft.json"
 import CONFIG from './address.js'
 import { fromWei , toWei , toThousands } from "../utils/tool";
 
@@ -405,6 +406,35 @@ export const getIDOOneLevelLists = async function () {
     }
   });
   return list;
+}
+
+// 获取nft奖励
+export const getIDORemainNft = async function () {
+  const account = window.newVue.$store.state.base.address;
+  const contract = new web3.eth.Contract(IDODsgNftABI, "0xAA92D655C9A79f2715A6e25B8832dBeD0331289b");
+  let list = [];
+  let balance = 0;
+  let countBalance = 0;
+  await contract.methods.getRemainNft("0x7DCBFF9995AC72222C6d46A45e82aA90B627f36D").call(function (error, result) {
+    console.log('account:' , account )
+    console.log('我的NFT奖励:' , result )
+    if (!error) {
+      if(result && result[0]) {
+        balance = result[0];
+      }
+      if(result && result[1]) {
+        countBalance = result[1];
+      }
+      // list = result;
+      // amount  = fromWei(result , 18)
+    } else   {
+      console.log('getRemainNft_err',error)
+    }
+  });
+  return {
+    balance: balance,
+    countBalance: countBalance,
+  };
 }
 
 // export const isNTFApproved = async function (tokenAddress, decimals, amount , otherAddress) {

@@ -44,7 +44,8 @@ export default {
     "IDORewardToken": "0x31FdBcb7a83195e37e63463bc8774CF08aA6444a",
     "IDOUsToken": "0x4E4955Df52F0D2148263005d7E31cdB7d012d04a",
     "IDOToken": "0xd4A911fc6269AC01EA96A7c0695997B3Dc808966",
-    "IDOInvitePool": "0x9F3C057e165475602b0627b146d3Ae26cfDa22Cb",
+    "IDOInvitePool": "0x9F3C057e165475602b0627b146d3Ae26cfDa22Cb", 
+    "IDODsgNftDeployed": "0x3c280b40D8Cd9550A01c51cD6cF7DE4683e4bB68", //直推合约地址
     nftImgSrc,
     nftName,
     nftPower

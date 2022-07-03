@@ -19,7 +19,7 @@
           <img src="@/assets/img/logo.png" alt />
           <div class="headertext">
             <p>{{ $t('farms-title-01') }}</p>
-            <span>{{ $t('farms-title-02') }}</span>
+            <!-- <span>{{ $t('farms-title-02') }}</span> -->
           </div>
         </div>
       </div>
