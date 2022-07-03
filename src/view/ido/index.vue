@@ -5,7 +5,7 @@
         class="banner"
         :style="`background-image: url(${bannerbjIMg});background-size: cover;`"
       >
-        <div style="margin-top:20px;font-size:28px;">{{ $t('ido-Countdown') }}</div>
+        <div style="font-size:28px;position: relative;top: 20px;">{{ $t('ido-Countdown') }}</div>
         <div class="countdown">
           <div>{{ day + "d" }}</div>
           <div>{{ hr + "h" }}</div>
@@ -117,163 +117,170 @@
         </el-col>
       </el-row>
 
-      <el-row class="promote-box">
-        <el-col :span="screenWidth >= 600 ? 10 : 24" align="center">
-          <!-- <div class="qrcode">
-            <img src="@/assets/img/ido/qrcode.png" alt width="407" />
-            <div class="qrCodeurl" ref="qrCodeUrl"></div>
-            <span
-              >https://ANS.net/dsdefdewfew'?utm=0x7DCBFF9995AC72222C6d46A45e82aA90B627f36D</span
-            >
-          </div> -->
-          <div class="qrcode">
+      <div class="promote-box">
+        <el-row>
+          <el-col :span="screenWidth >= 600 ? 10 : 24" align="center">
+            <!-- <div class="qrcode">
+              <img src="@/assets/img/ido/qrcode.png" alt width="407" />
               <div class="qrCodeurl" ref="qrCodeUrl"></div>
-              <div class="address">{{utmAddress}}</div>
-          </div>
-          <div class="CopyBtn">
-            <div v-clipboard:copy="utmAddress" v-clipboard:success="copySuccess">{{ $t('ido-CopyLink') }}</div>
-            <div @click="showBind()">{{ $t('ido-BindSuperior') }}</div>
-          </div>
-        </el-col>
-        <el-col :span="screenWidth >= 600 ? 14 : 24" style="padding-top: 50px">
-          <div class="save-code">
-            <!-- <div style="padding-bottom: 20px">
-              Save QR code &nbsp;&nbsp;<img
-                src="@/assets/img/ido/dow.png"
-                alt
-                width="20"
-              />
+              <span
+                >https://ANS.net/dsdefdewfew'?utm=0x7DCBFF9995AC72222C6d46A45e82aA90B627f36D</span
+              >
             </div> -->
-            <div style="padding-bottom: 20px">IDO {{ $t('ido-pushed') }}</div>
-            <div style="color:#70F4A5;font-weight: 800;font-size:24px">5</div>
-          </div>
-          <div class="details-button">
-            <div class="details" @click="showDirect()">{{ $t('ido-DirectPushDetails') }}</div>
-          </div>
-          <div class="slider">
-            <el-slider
-              v-model="value2"
-              :step="1"
-              :max="30"
-              :min="5"
-              show-stops
-              :marks="marks"
-            >
-            </el-slider>
-          </div>
-          <div class="badge">
-            <div class="img-05" :style="{opacity: (value2 >= 5 ? 1 : 0.5)}">
-              <img
-                class="img-05-1"
-                src="@/assets/img/ido/ForceBadge0.png"
-                alt=""
-                width="70"
-                
-              />
-              {{ $t('ido-badge-05') }}
+            <div class="qrcode">
+                <div class="qrCodeurl" ref="qrCodeUrl"></div>
+                <div class="address">{{utmAddress}}</div>
             </div>
-
-            <div class="img-10" :style="{opacity: (value2 >= 10? 1:0.5)}">
-              <img
-                class="img-05-1"
-                src="@/assets/img/ido/ForceBadge1.png"
-                alt=""
-                width="70"
-                
-              />
-              {{ $t('ido-badge-10') }}
+            <div class="CopyBtn">
+              <div v-clipboard:copy="utmAddress" v-clipboard:success="copySuccess">{{ $t('ido-CopyLink') }}</div>
+              <div @click="showBind()">{{ $t('ido-BindSuperior') }}</div>
             </div>
-            <div class="img-15" :style="{opacity: (value2 >= 15? 1:0.5)}">
-              <img
-                class="img-05-1"
-                src="@/assets/img/ido/ForceBadge2.png"
-                alt=""
-                width="70"
-                
-              />
-              {{ $t('ido-badge-15') }}
+          </el-col>
+          <el-col :span="screenWidth >= 600 ? 14 : 24" style="padding-top: 80px">
+            <div class="save-code">
+              <!-- <div style="padding-bottom: 20px">
+                Save QR code &nbsp;&nbsp;<img
+                  src="@/assets/img/ido/dow.png"
+                  alt
+                  width="20"
+                />
+              </div> -->
+              <div style="padding-bottom: 20px">IDO {{ $t('ido-pushed') }}</div>
+              <div style="color:#70F4A5;font-weight: 800;font-size:24px">5</div>
             </div>
-            <div class="img-20" :style="{opacity: (value2 >= 20? 1:0.5)}">
-              <img
-                class="img-05-1"
-                src="@/assets/img/ido/ForceBadge3.png"
-                alt=""
-                width="70"
-                
-              />
-              {{ $t('ido-badge-20') }}
+            <div class="details-button">
+              <div class="details" @click="showDirect()">{{ $t('ido-DirectPushDetails') }}</div>
             </div>
-            <div class="img-25" :style="{opacity: (value2 >= 25? 1:0.5)}">
-              <img
-                class="img-05-1"
-                src="@/assets/img/ido/ForceBadge4.png"
-                alt=""
-                width="70"
-              />
-              {{ $t('ido-badge-25') }}
+            <div class="slider">
+              <el-slider
+                v-model="value2"
+                :step="1"
+                :max="30"
+                :min="5"
+                show-stops
+                :marks="marks"
+              >
+              </el-slider>
             </div>
-            <div class="img-30" :style="{opacity: (value2 >= 30? 1:0.5)}">
-              <img
-                class="img-05-1"
-                src="@/assets/img/ido/ForceBadge5.png"
-                alt=""
-                width="70"
-              />
-              {{ $t('ido-badge-30') }}
-            </div>
-          </div>
-          <div class="receive">
-            <div id="selected">{{ $t('ido-ReceiveNFT') }}</div>
-            <div v-if="screenWidth >= 600">{{ $t('ido-NONFT') }}</div>
-            <div v-if="screenWidth >= 600">{{ $t('ido-NFTReceived') }}</div>
-          </div>
-        </el-col>
-        <el-col :span="24">
-          <div class="bottom-box">
-            <div class="left">
-              IDO {{ $t('ido-Rule') }}
-              <div class="botimg">
-                <div>
-                  <img src="@/assets/img/ido/ans.png" alt="" srcset="">
-                  ANS
-                </div>
-                <div>
-                  <img src="@/assets/img/ido/USDT.png" alt="" srcset="">
-                  USDT
-                </div>
-              </div>
-              <div class="textb">
-                {{ $t('ido-Rule-01') }} <br>
-                {{ $t('ido-Rule-02') }}<br> 
-                {{ $t('ido-Rule-03') }}<br> 
-                {{ $t('ido-Rule-04') }}<br> 
-                {{ $t('ido-Rule-05') }}<br> 
+            <div class="badge">
+              <div class="img-05" :style="{opacity: (value2 >= 5 ? 1 : 0.5)}">
+                <img
+                  class="img-05-1"
+                  src="@/assets/img/ido/ForceBadge0.png"
+                  alt=""
+                  width="70"
+                  
+                />
+                {{ $t('ido-badge-05') }}
               </div>
 
-            </div>
-            <div class="right">
-              {{ $t('ido-MedalFreedom') }}
-              <div class="botimg">
-                <div>
-                  <img src="@/assets/img/ido/angle.png" alt="" srcset="">
-                </div>
+              <div class="img-10" :style="{opacity: (value2 >= 10? 1:0.5)}">
+                <img
+                  class="img-05-1"
+                  src="@/assets/img/ido/ForceBadge1.png"
+                  alt=""
+                  width="70"
+                  
+                />
+                {{ $t('ido-badge-10') }}
               </div>
-              <div class="textb">{{ $t('ido-MedalFreedom-title') }}<br>
-              {{ $t('ido-MedalFreedom-01') }}<br>
-              {{ $t('ido-MedalFreedom-02') }}<br>
-              {{ $t('ido-MedalFreedom-03') }}<br>
-              {{ $t('ido-MedalFreedom-04') }}<br>
-              {{ $t('ido-MedalFreedom-05') }}<br>
-              {{ $t('ido-MedalFreedom-06') }}<br>
-              {{ $t('ido-MedalFreedom-07') }}<br>
-              {{ $t('ido-MedalFreedom-08') }}<br>
+              <div class="img-15" :style="{opacity: (value2 >= 15? 1:0.5)}">
+                <img
+                  class="img-05-1"
+                  src="@/assets/img/ido/ForceBadge2.png"
+                  alt=""
+                  width="70"
+                  
+                />
+                {{ $t('ido-badge-15') }}
+              </div>
+              <div class="img-20" :style="{opacity: (value2 >= 20? 1:0.5)}">
+                <img
+                  class="img-05-1"
+                  src="@/assets/img/ido/ForceBadge3.png"
+                  alt=""
+                  width="70"
+                  
+                />
+                {{ $t('ido-badge-20') }}
+              </div>
+              <div class="img-25" :style="{opacity: (value2 >= 25? 1:0.5)}">
+                <img
+                  class="img-05-1"
+                  src="@/assets/img/ido/ForceBadge4.png"
+                  alt=""
+                  width="70"
+                />
+                {{ $t('ido-badge-25') }}
+              </div>
+              <div class="img-30" :style="{opacity: (value2 >= 30? 1:0.5)}">
+                <img
+                  class="img-05-1"
+                  src="@/assets/img/ido/ForceBadge5.png"
+                  alt=""
+                  width="70"
+                />
+                {{ $t('ido-badge-30') }}
+              </div>
+            </div>
+            <div class="receive">
+              <div id="selected">{{ $t('ido-ReceiveNFT') }}</div>
+              <div v-if="screenWidth >= 600">{{ $t('ido-NONFT') }}</div>
+              <div v-if="screenWidth >= 600">{{ $t('ido-NFTReceived') }}</div>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-col :span="screenWidth >= 600 ? 12 : 24">
+            <div class="bottom-box">
+              <div class="left">
+                IDO {{ $t('ido-Rule') }}
+                <div class="botimg">
+                  <div>
+                    <img src="@/assets/img/ido/ans.png" alt="" srcset="">
+                    ANS
+                  </div>
+                  <div>
+                    <img src="@/assets/img/ido/USDT.png" alt="" srcset="">
+                    USDT
+                  </div>
+                </div>
+                <div class="textb">
+                  {{ $t('ido-Rule-01') }} <br>
+                  {{ $t('ido-Rule-02') }}<br> 
+                  {{ $t('ido-Rule-03') }}<br> 
+                  {{ $t('ido-Rule-04') }}<br> 
+                  {{ $t('ido-Rule-05') }}<br> 
+                </div>
 
+              </div>
             </div>
+          </el-col>
+          <el-col :span="screenWidth >= 600 ? 12 : 24">
+            <div class="bottom-box">
+              <div class="right">
+                {{ $t('ido-MedalFreedom') }}
+                <div class="botimg">
+                  <div>
+                    <img src="@/assets/img/ido/angle.png" alt="" srcset="">
+                  </div>
+                </div>
+                <div class="textb">{{ $t('ido-MedalFreedom-title') }}<br>
+                {{ $t('ido-MedalFreedom-01') }}<br>
+                {{ $t('ido-MedalFreedom-02') }}<br>
+                {{ $t('ido-MedalFreedom-03') }}<br>
+                {{ $t('ido-MedalFreedom-04') }}<br>
+                {{ $t('ido-MedalFreedom-05') }}<br>
+                {{ $t('ido-MedalFreedom-06') }}<br>
+                {{ $t('ido-MedalFreedom-07') }}<br>
+                {{ $t('ido-MedalFreedom-08') }}<br>
+
+              </div>
+              </div>
             </div>
-          </div>
-          
-        </el-col>
-      </el-row>
+          </el-col>
+        </el-row>
+      </div>
 
       <!-- 提取输入数值弹框 -->
       <el-dialog
@@ -613,10 +620,10 @@
                 <div class="abs">0x2592…51C</div>
               </div>
               <div style="text-align:center;margin-top:30px;">Total team IDO quota</div>
-              <div class="seeANS">
+              <!-- <div class="seeANS">
                 <div>14509 ANS</div>
                 <div class="details" @click="showDirectList()">{{ $t('ido-Details') }}</div>
-              </div>
+              </div> -->
 
             </div>
           </div>
@@ -1045,12 +1052,14 @@ export default {
           background-size: contain;
           width: 350px;
           height: 150px;
-          padding-top: 22px;
+          // padding-top: 22px;
           color: #333;
           text-align: center;
           display: table;
-          margin-top: -16px;
+          // margin-top: -16px;
           div {
+            position: relative;
+            top:24px;
             background: url(../../assets/img/ido/countdown-span.png) no-repeat
               center;
             background-size: contain;
@@ -1381,12 +1390,13 @@ export default {
         }
         .bottom-box {
           width: 100%;
+          height: 350px;
           margin-top: 30px;
           display: flex;
           justify-content: space-between;
           text-align: center;
           .left{
-            width:48%;
+            // width:48%;
             background-color: #161d18;
             padding:20px 60px;
             border-radius: 8px;
@@ -1407,7 +1417,7 @@ export default {
             }
           }
           .right{
-            width:46%;
+            // width:46%;
             background-color: #161d18;
             padding:20px 16px;
             border-radius: 8px;
@@ -1789,8 +1799,9 @@ export default {
         margin-right:0;
       }
       .bottom-box{
-        display: block;
-        position: absolute;
+        height: 373px;
+        // display: block;
+        // position: absolute;
         .left,.right{
           margin-top: 20px;
           width:100%;
