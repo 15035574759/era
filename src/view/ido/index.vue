@@ -694,7 +694,7 @@ export default {
     }),
     utmAddress(){
         // return window.origin + `/#/ido?utm=${this.address}`
-        return window.location.href + `/#/ido?utm=${this.address}`
+        return window.location.href + `?utm=${this.address}`
     }
   },
   data() {
@@ -971,7 +971,7 @@ export default {
     },
     creatQrCode() {
       let a = new QRCode(this.$refs.qrCodeUrl, {
-        text: window.location.href + `/#/ido?utm=${this.address}`, // 需要转换为二维码的内容
+        text: window.location.href + `?utm=${this.address}`, // 需要转换为二维码的内容
         width: this.screenWidth >= 600 ? 180 : 150,
         height: this.screenWidth >= 600 ? 180 : 150,
         colorDark: "black", //#000000为黑色
