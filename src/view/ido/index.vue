@@ -20,7 +20,7 @@
             <div class="approved-pay" v-if="approve">
               <img src="@/assets/img/ido/approved-yes.png" alt width="100" />
               <span>{{$t('ido-Approved')}}</span>&nbsp;&nbsp;
-              <div v-if="isPay" class="pay-yes" @click="payUsdtOrANS()">{{ $t('ido-Pay') }}</div>
+              <div v-if="!isPay" class="pay-yes" @click="payUsdtOrANS()">{{ $t('ido-Pay') }}</div>
               <div v-else class="pay-no">{{ $t('ido-Pay') }}</div>
             </div>
             <div class="approved-pay" v-if="!approve">
@@ -789,6 +789,7 @@ export default {
           if(val){
             this.getIsApprove();
             this.getIdoAmount();
+            
           }
       }
     },
@@ -958,7 +959,7 @@ export default {
     },
     creatQrCode() {
       let a = new QRCode(this.$refs.qrCodeUrl, {
-        text: "https://www.baidu.com", // 需要转换为二维码的内容
+        text: window.origin + `/#/ido?utm=${this.address}`, // 需要转换为二维码的内容
         width: this.screenWidth >= 600 ? 180 : 150,
         height: this.screenWidth >= 600 ? 180 : 150,
         colorDark: "black", //#000000为黑色
