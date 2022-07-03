@@ -942,7 +942,7 @@ export default {
         let now = date.getTime();
 
         //设置截止时间
-        var endDate = new Date(this.countDate);
+        var endDate = new Date(this.countDate.replace(/-/g,'/'));
         var endTime = endDate.getTime();
         //时间差
         let countTime = endTime - now;
