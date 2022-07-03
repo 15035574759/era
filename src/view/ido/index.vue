@@ -603,24 +603,28 @@
         </div>
         <div class="main">
           <el-row>
-              <el-col :span="12" align="center">
-                <div :class="[changeDirectpushState==0?'get':'get-no']" style="margin: 0 auto" @click="changeDirectpush(0)">Direct push</div>
+              <el-col :span="24" align="center">
+                <!-- <div :class="[changeDirectpushState==0?'get':'get-no']" style="margin: 0 auto" @click="changeDirectpush(0)">Direct push</div> -->
+                <div style="color:#fff;"> {{ $t('ido-total-quote') }} </div> 
+                <div class="seeANS">
+                  <div>14509 ANS</div>
+                </div>
               </el-col>
-              <el-col :span="12" align="right">
+              <!-- <el-col :span="24" align="center">
                 <div :class="[changeDirectpushState==1?'get':'get-no']" style="margin: 0 auto" @click="changeDirectpush(1)">NFT Rewards</div>
-              </el-col>
+              </el-col> -->
           </el-row>
           <div class="tableList">
             <div class="listui">
-              <div class="listli" v-for="item in aaaa" :key="item" >
-                <div class="li">
+              <div class="listli" v-for="item in LevelLists" :key="item" >
+                <!-- <div class="li">
                   <div>2022-06-09 11:20:14</div>
                   <div>Direct push succeeds +1</div>
-                </div>
-                <div class="abs">0x2592…51C</div>
+                </div> -->
+                <div class="abs">{{ item }}</div>
               </div>
-              <div style="text-align:center;margin-top:30px;">Total team IDO quota</div>
-              <!-- <div class="seeANS">
+              <!-- <div style="text-align:center;margin-top:30px;">Total team IDO quota</div>
+              <div class="seeANS">
                 <div>14509 ANS</div>
                 <div class="details" @click="showDirectList()">{{ $t('ido-Details') }}</div>
               </div> -->
@@ -651,7 +655,7 @@
         <div class="main">
           <div class="directList">
             <div class="listui">
-              <div class="listli" v-for="item in aaaa"  :key="item">
+              <div class="listli" v-for="item in LevelLists"  :key="item">
                 <div class="abs">0x2592…51C</div>
                 <div class="li">
                   <div><img src="@/assets/img/ido/ans.png" alt="" srcset=""></div>
@@ -673,7 +677,7 @@
 import QRCode from "qrcodejs2";
 import { mapState } from "vuex";
 import { approve, IDOPayDeposit, IDOHarvest, IDOAnsRewardHarvest, IDOUsdtRewardHarvest } from "@/wallet/trade";
-import {isApproved, getIDOUserInfo, getIDOANSRewardAmount, getIDOUSDTRewardAmount} from "@/wallet/inquire";
+import {isApproved, getIDOUserInfo, getIDOANSRewardAmount, getIDOUSDTRewardAmount, getIDOOneLevelLists} from "@/wallet/inquire";
 import CONFIG from '@/wallet/address.js'
 import {addressCheck} from "../../utils/tool";
 export default {
@@ -689,7 +693,8 @@ export default {
       IDOToken:state=>state.base.IDOToken,
     }),
     utmAddress(){
-        return window.origin + `/#/ido?utm=${this.address}`
+        // return window.origin + `/#/ido?utm=${this.address}`
+        return window.location.href + `/#/ido?utm=${this.address}`
     }
   },
   data() {
@@ -756,7 +761,7 @@ export default {
       showBindAddressShow: false, //点击手动绑定钱包地址弹框
       showDirectState: false,//点击Direct 改
       changeDirectpushState: 0,//状态   改
-      aaaa:[1,2,3,4,5,6],//改
+      LevelLists:[],//我的下级直推列表
       showDirectListState: false,//改
       utmAddressValue: '', //邀请人地址 url
       buildHrefAddressValue: '',
@@ -966,7 +971,7 @@ export default {
     },
     creatQrCode() {
       let a = new QRCode(this.$refs.qrCodeUrl, {
-        text: window.origin + `/#/ido?utm=${this.address}`, // 需要转换为二维码的内容
+        text: window.location.href + `/#/ido?utm=${this.address}`, // 需要转换为二维码的内容
         width: this.screenWidth >= 600 ? 180 : 150,
         height: this.screenWidth >= 600 ? 180 : 150,
         colorDark: "black", //#000000为黑色
@@ -995,8 +1000,15 @@ export default {
         this.utmAddressValue = this.utmAddressHref();
       }
     },
-    showDirect(){ //改
+    showDirect(){ //显示直推下级列表弹框
       this.showDirectState = true;
+      setTimeout(async()=>{
+        let list = await getIDOOneLevelLists();
+        if(list && list.length > 0) {
+          this.LevelLists = list;
+        }
+        // console.log(list);
+      }, 300)
     },
     changeDirectpush(value){ //改
        this.changeDirectpushState = value;
@@ -1510,6 +1522,9 @@ export default {
 
       .elDialog {
         border-radius: 30px;
+        .el-dialog__body {
+          padding-top: 0;
+        }
         .el-dialog__header {
           display: block;
         }
@@ -1573,6 +1588,20 @@ export default {
               }
             }
           }
+          .seeANS{
+            background:#000;
+            border-radius: 28px;
+            width: 151px;
+            margin:auto;
+            margin-top: 10px;
+            display: flex;
+            padding:10px 10px;
+            color:#70F4A5;
+            font-size: 18px;
+            font-weight: 900;
+            justify-content: center;
+            align-items: center;
+          }
         }
         .table {
           margin-top: 10px;
@@ -1597,16 +1626,20 @@ export default {
       }
 
       .tableList{  //改
-           color:#fff;
+          color:#fff;
+          margin-top: 10px;
+          height: 200px;
+          overflow: auto;
           .listli{
             display: flex;
             width:100%;
             .abs{
-              width:30px;overflow: hidden;
+              // width:30px;overflow: hidden;
               text-overflow:ellipsis;
               white-space:nowrap;
               line-height: 30px;
-              
+              margin: 0 auto;
+              font-size: 18px;
             }
             .li{
               flex: 1;

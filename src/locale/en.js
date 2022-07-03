@@ -62,6 +62,7 @@ export default {
     'ido-please-inviter-address': `Please enter the inviter's address`,
     'ido-confirm': 'Confirm',
     'ido-get': 'get',
+    'ido-total-quote': 'Total team IDO quota',
     'home-Battle': 'Battle',
     'home-EXPLORATION': 'EXPLORATION',
     'home-FARMING': 'FARMING',

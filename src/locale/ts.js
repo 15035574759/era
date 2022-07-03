@@ -54,6 +54,7 @@ export default {
     'ido-please-inviter-address': `請輸入邀請人地址`,
     'ido-confirm': '確認',
     'ido-get': '兌換',
+    'ido-total-quote': '团队 IDO 总配额',
     'home-Battle': '戰鬥',
     'home-EXPLORATION': '勘探',
     'home-FARMING': '農業',

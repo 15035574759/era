@@ -4,6 +4,7 @@ import NftMarketAbi from "./abis/nftMarket.json"
 import SinglePoolAbi from "./abis/singlePool.json"
 import NtfPoolAbi from "./abis/EarnPool.json"
 import IDOAbi from "./abis/IDO.json"
+import IDOInvitePoolABI from "./abis/invitePool.json"
 import CONFIG from './address.js'
 import { fromWei , toWei , toThousands } from "../utils/tool";
 
@@ -387,6 +388,23 @@ export  const getIDOUSDTRewardAmount = async function () {
     }
   });
   return amount;
+}
+
+// 获取我的直推奖励
+export const getIDOOneLevelLists = async function () {
+  const account = window.newVue.$store.state.base.address;
+  const contract = new web3.eth.Contract(IDOInvitePoolABI, CONFIG.IDOInvitePool);
+  let list = [];
+  await contract.methods.getOneLevelLists(account).call(function (error, result) {
+    console.log('我的直推奖励:' , result )
+    if (!error) {
+      list = result;
+      // amount  = fromWei(result , 18)
+    } else   {
+      console.log('balanceOf_err',error)
+    }
+  });
+  return list;
 }
 
 // export const isNTFApproved = async function (tokenAddress, decimals, amount , otherAddress) {
