@@ -32,7 +32,8 @@
               <div class="steps">
                 <!-- <img v-if="approve" src="@/assets/img/ido/success-01.png" alt width="30" /> -->
                 <img :src="require(`@/assets/img/ido/${approve ? `success-01` : `step-01`}.png`)" alt width="25" />
-                <div class="wire"></div>
+                <div :class="[isPay ? 'wire-success' : 'wire']"></div>
+                <!-- wire-success -->
                 <!-- <img src="@/assets/img/ido/step-02.png" alt width="20" /> -->
                 <img :src="require(`@/assets/img/ido/${isPay ? `success-01` : `step-02`}.png`)" alt width="25" />
               </div>
@@ -560,7 +561,7 @@
       <el-dialog
         :title="$t('ido-BindSuperior')"
         :visible.sync="showBindAddressShow"
-        :width="screenWidth >= 600 ? '30%' : '80%'"
+        :width="screenWidth >= 600 ? '30%' : '90%'"
         center
         :show-close="false"
         class="elDialogBind"
@@ -576,7 +577,7 @@
           <div class="input">
             <el-row>
               <el-col :span="24" align="right" class="number">
-                <el-input v-model="inviteAddress" :placeholder="$t('ido-please-inviter-address')">
+                <el-input style="font-size:16px;" v-model="inviteAddress" :placeholder="$t('ido-please-inviter-address')">
                 </el-input>
               </el-col>
             </el-row>
@@ -591,7 +592,7 @@
        <el-dialog
         :title="$t('ido-DirectPushDetails')"
         :visible.sync="showDirectState"
-        :width="screenWidth >= 600 ? '30%' : '80%'"
+        :width="screenWidth >= 600 ? '30%' : '90%'"
         center
         :show-close="false"
         class="elDialog elDialogDirect"
@@ -1211,6 +1212,11 @@ export default {
                 height: 0;
                 border: 1px dashed #335741;
               }
+              .wire-success {
+                width: 200px;
+                height: 0;
+                border: 1px dashed #70f4a5;
+              }
             }
             .el-steps {
               width: 100px !important;
@@ -1716,7 +1722,7 @@ export default {
               white-space:nowrap;
               line-height: 30px;
               margin: 0 auto;
-              font-size: 18px;
+              font-size: 16px;
             }
             .li{
               flex: 1;
@@ -1819,6 +1825,7 @@ export default {
             .el-input__inner {
               border-radius: 26px;
               background-color: #131D17;
+              font-size: 12px;
               // height: 70px;
               color: #fff;
               font-weight: 800;
