@@ -527,7 +527,7 @@
       <el-dialog
         :title="$t('ido-BindSuperior')"
         :visible.sync="showBindState"
-        :width="screenWidth >= 600 ? '30%' : '80%'"
+        :width="screenWidth >= 600 ? '30%' : '90%'"
         center
         :show-close="false"
         class="elDialogBind"
