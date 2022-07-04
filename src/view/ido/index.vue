@@ -797,7 +797,12 @@ export default {
         });
         return false;
       }
-      this.inviteAddress = inviter_address;
+      if(inviter_address && inviter_address !== '') {
+        console.log("邀请地址：" + inviter_address);
+        this.inviteAddress = inviter_address;
+        this.utmAddressValue = this.utmAddressHref();
+        this.showBindState = true;
+      }
     }
   },
   mounted() {
@@ -811,12 +816,6 @@ export default {
           if(val){
             this.getIsApprove();
             this.getIdoAmount();
-            if(this.inviteAddress && this.inviteAddress !== '') {
-              if(this.inviteAddress !== this.address) {
-                this.utmAddressValue = this.utmAddressHref();
-                this.showBindState = true;
-              }
-            }
           }
       }
     },
