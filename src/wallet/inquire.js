@@ -411,11 +411,11 @@ export const getIDOOneLevelLists = async function () {
 // 获取nft奖励
 export const getIDORemainNft = async function () {
   const account = window.newVue.$store.state.base.address;
-  const contract = new web3.eth.Contract(IDODsgNftABI, "0xAA92D655C9A79f2715A6e25B8832dBeD0331289b");
+  const contract = new web3.eth.Contract(IDODsgNftABI, CONFIG.IDODsgNftDeployed);
   let list = [];
   let balance = 0;
   let countBalance = 0;
-  await contract.methods.getRemainNft("0x7DCBFF9995AC72222C6d46A45e82aA90B627f36D").call(function (error, result) {
+  await contract.methods.getRemainNft(account).call(function (error, result) {
     console.log('account:' , account )
     console.log('我的NFT奖励:' , result )
     if (!error) {
