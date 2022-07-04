@@ -254,6 +254,19 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "invitor",
+          "type": "address"
+        }
+      ],
+      "name": "invite",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "invitePool",
       "outputs": [

@@ -20,13 +20,13 @@
             <div class="approved-pay" v-if="approve">
               <img src="@/assets/img/ido/approved-yes.png" alt width="100" />
               <span>{{$t('ido-Approved')}}</span>&nbsp;&nbsp;
-              <div v-if="!isPay" class="pay-yes" @click="payUsdtOrANS()">{{ $t('ido-Pay') }}</div>
+              <div v-loading="payLoading" v-if="!isPay" :class="['pay-yes', payLoading ? 'events-none' : '']" @click="payUsdtOrANS()">{{ $t('ido-Pay') }}</div>
               <div v-else class="pay-no">{{ $t('ido-Pay') }}</div>
             </div>
             <div class="approved-pay" v-if="!approve">
               <img src="@/assets/img/ido/approved-no.png" alt width="100" />
               <span style="color: #ffffff">{{ $t('ido-Unapproved') }}</span>&nbsp;&nbsp;
-              <div class="pay-yes" @click="startApprove()">{{ $t('ido-Approved') }}</div>
+              <div v-loading="approvedLoading" :class="['pay-yes', approvedLoading ? 'events-none' : '']" @click="startApprove()">{{ $t('ido-Approved') }}</div>
             </div>
             <div class="approved-pay-steps">
               <div class="steps">
@@ -224,7 +224,7 @@
               </div>
             </div>
             <div class="receive">
-              <div id="selected" v-if="getNftPushedState()" @click="getIDORemainNft()">{{ $t('ido-ReceiveNFT') }}</div>
+              <div id="selected" v-if="getNftPushedState()" @click="getIDORemainNft()" :class="['extract-dialog-max', claimNftLoading ? 'events-none' : '']" v-loading="claimNftLoading">{{ $t('ido-ReceiveNFT') }}</div>
               <div v-else>{{ $t('ido-NONFT') }}</div>
               <!-- <div v-if="screenWidth >= 600">{{ $t('ido-NFTReceived') }}</div> -->
             </div>
@@ -314,7 +314,7 @@
           </div>
           <span slot="footer" class="dialog-footer">
             <!-- <el-button type="primary" @click="extractShow = false">确 定</el-button> -->
-            <div class="extract-dialog-max" style="margin: 0 auto" @click="extractStart()">{{ $t('ido-Extract') }}</div>
+            <div style="margin: 0 auto" @click="extractStart()" :class="['extract-dialog-max', extractLoading ? 'events-none' : '']" v-loading="extractLoading">{{ $t('ido-Extract') }}</div>
           </span>
         </div>
       </el-dialog>
@@ -522,7 +522,7 @@
         </div>
       </el-dialog>
 
-      <!-- 点击bind按钮显示内容-->
+      <!-- 自动获取邀请地址弹框 -->
       <el-dialog
         :title="$t('ido-BindSuperior')"
         :visible.sync="showBindState"
@@ -551,8 +551,8 @@
           </div>
           <span slot="footer" class="dialog-footer">
             <!-- <div class="pay-yes" @click="startApprove()">{{ $t('ido-Approved') }}</div> -->
-            <div v-if="!approve" class="extract-dialog-max" style="margin: 0 auto" @click="startApprove()">{{ $t('ido-Approved') }}</div>
-            <div v-else class="extract-dialog-max" style="margin: 0 auto" @click="payUsdtOrANS()">{{ $t('ido-confirm') }}</div>
+            <!-- <div v-if="!approve" class="extract-dialog-max" style="margin: 0 auto" @click="startApprove()">{{ $t('ido-Approved') }}</div> -->
+            <div class="extract-dialog-max" style="margin: 0 auto" @click="buildInviteAddress()">{{ $t('ido-confirm') }}</div>
           </span>
       </el-dialog>
 
@@ -582,11 +582,12 @@
             </el-row>
           </div>
           <span slot="footer" class="dialog-footer">
-            <div class="extract-dialog-max" style="margin: 0 auto" @click="BindAddressClick()">{{ $t('ido-confirm') }}</div>
+            <!-- <div class="extract-dialog-max" style="margin: 0 auto" @click="BindAddressClick()">{{ $t('ido-confirm') }}</div> -->
+            <div style="margin: 0 auto" @click="buildInviteAddress()" :class="['extract-dialog-max', buildInviteLoading ? 'events-none' : '']" v-loading="buildInviteLoading">{{ $t('ido-confirm') }}</div>
           </span>
       </el-dialog>
 
-      <!-- 点击direct 改 -->
+      <!-- 直推详情弹框 -->
        <el-dialog
         :title="$t('ido-DirectPushDetails')"
         :visible.sync="showDirectState"
@@ -678,7 +679,7 @@
 <script>
 import QRCode from "qrcodejs2";
 import { mapState } from "vuex";
-import { approve, IDOPayDeposit, IDOHarvest, IDOAnsRewardHarvest, IDOUsdtRewardHarvest, IDOClaimNftReward } from "@/wallet/trade";
+import { approve, IDOPayDeposit, IDOHarvest, IDOAnsRewardHarvest, IDOUsdtRewardHarvest, IDOClaimNftReward, IDOBindInvite } from "@/wallet/trade";
 import {isApproved, getIDOUserInfo, getIDOANSRewardAmount, getIDOUSDTRewardAmount, getIDOOneLevelLists, getIDORemainNft} from "@/wallet/inquire";
 import CONFIG from '@/wallet/address.js'
 import {addressCheck} from "../../utils/tool";
@@ -696,7 +697,7 @@ export default {
     }),
     utmAddress(){
         // return window.origin + `/#/ido?utm=${this.address}`
-        return window.location.href + `?utm=${this.address}`
+        return window.location.host + window.location.pathname + `/#/ido?utm=${this.address}`
     }
   },
   data() {
@@ -767,7 +768,7 @@ export default {
       showDirectListState: false,//改
       utmAddressValue: '', //邀请人地址 url
       buildHrefAddressValue: '',
-      inviteAddress: '0x0000000000000000000000000000000000000000', //邀请地址
+      inviteAddress: '', //邀请地址
       payUsdtOrAnsAmount: 100, //usdt or ans 最低 100
       ansObtainedAmount: 0, //IDO 可领取的数量 
       ansReleasedAmount: 0, //待释放数量 
@@ -778,6 +779,12 @@ export default {
       remainingNFTReward: 0, //剩余NFT奖励
       countNFTReward: 0, //总的NFT奖励
       countNFTRewardSlider: 0,
+      trading: false,
+      payLoading: false,
+      approvedLoading: false,
+      extractLoading: false,
+      buildInviteLoading: false,
+      claimNftLoading: false,
     };
   },
   created() {
@@ -785,14 +792,12 @@ export default {
     if(inviter_address && inviter_address !== '') {
       if(!addressCheck(inviter_address)) {
         this.$notify({
-          message: "邀请地址无效",
+          message: "Invite address is invalid",
           type: "error",
         });
         return false;
       }
       this.inviteAddress = inviter_address;
-      this.utmAddressValue = this.utmAddressHref();
-      this.showBindState = true;
     }
   },
   mounted() {
@@ -806,7 +811,12 @@ export default {
           if(val){
             this.getIsApprove();
             this.getIdoAmount();
-            
+            if(this.inviteAddress && this.inviteAddress !== '') {
+              if(this.inviteAddress !== this.address) {
+                this.utmAddressValue = this.utmAddressHref();
+                this.showBindState = true;
+              }
+            }
           }
       }
     },
@@ -816,10 +826,10 @@ export default {
   },
   methods: {
     utmAddressHref() {
-      return window.location.href + "?utm=" + this.inviteAddress;
+      return window.location.host + window.location.pathname + "#/ido?utm=" + this.inviteAddress;
     },
     extractStart() { //开始提取
-      this.trading = true;
+      this.extractLoading = true;
       let _contractName = '';
       if(this.extractAmountValue <= 0) {
         // this.$notify({
@@ -839,27 +849,31 @@ export default {
       }
       _contractName(this.extractAmountValue).then(async(hash) => {
         if(hash) {
-          await this.getIdoAmount();
+          this.extractLoading = false;
           this.extractShow = false;
+          await this.getIdoAmount();
         }
       }).finally(() => {
-        this.trading = false;
+        this.extractLoading = false;
       });
     },
     IDOExtractClick() { //点击IDO提取
       this.extractDetailsName = "IDO";
       this.extractBalance = this.ansObtainedAmount;
       this.extractShow = true;
+      this.extractAmountValue = 0;
     },
     ANSExtractClick() { //点击ANS提取
       this.extractDetailsName = "ANS";
       this.extractBalance = this.ansRewardAmount;
       this.extractShow = true;
+      this.extractAmountValue = 0;
     },
     USDTExtractClick() { //点击USDT提取
       this.extractDetailsName = "USDT";
       this.extractBalance = this.usdtRewardAmount;
       this.extractShow = true;
+      this.extractAmountValue = 0;
     },
     IDODetailsClick() { //点击IDO明细
       this.IDODetailsShow = true;
@@ -893,39 +907,59 @@ export default {
       });
     },
     startApprove() { //批准USDT
-      this.trading = true;
+      this.approvedLoading = true;
       approve(CONFIG.IDOUsToken, CONFIG.IDOToken).then((hash) => {
         // console.log(result);
         if(hash) {
           this.approve = true;
-          this.trading = false;
+          this.approvedLoading = false;
         }
       }).finally(() => {
-        this.trading = false;
+        this.approvedLoading = false;
       });
     },
-    payUsdtOrANS() { //100 USDT get 1000 ANS
-      this.trading = true;
+    payUsdtOrANS() { //100 USDT get 1000 ANS 绑定推荐关系
+      this.payLoading = true;
       IDOPayDeposit(this.payUsdtOrAnsAmount, this.inviteAddress).then((hash) => {
         console.log(hash);
         if(hash) {
-          this.trading = false;
-          this.showBindState = false;
+          this.payLoading = false;
+          // this.showBindState = false;
           this.getIdoAmount();
         }
       }).finally(() => {
-        this.trading = false;
+        this.payLoading = false;
       });
+    },
+    buildInviteAddress() { //单独绑定推荐关系
+      if(this.inviteAddress && this.inviteAddress !== '') {
+        if(this.inviteAddress.toLowerCase() === this.address.toLowerCase()) {
+          this.$notify({
+            message: "Invite address is invalid",
+            type: "error",
+          });
+          return fasle;
+        }
+        this.buildInviteLoading = true;
+        IDOBindInvite(this.inviteAddress).then((hash) => {
+          this.buildInviteLoading = false;
+          this.showBindState = false;
+          // this.getIdoAmount();
+        }).finally(() => {
+          this.buildInviteLoading = false;
+        });
+      }
     },
     getIDORemainNft() { //领取NFT奖励
       if(this.getNftPushedState()) {
+        this.claimNftLoading = true;
         IDOClaimNftReward(this.remainingNFTReward).then((hash) => {
           if(hash) {
-            this.trading = false;
+            this.claimNftLoading = false;
             this.getIdoAmount();
           }
         }).finally(() => {
-          this.trading = false;
+          this.claimNftLoading = false;
         });
       }
     },
@@ -938,12 +972,6 @@ export default {
     },
     async getIdoAmount() { //获取IDO数量
       let ANSObtained = await getIDOUserInfo();
-      let ANSRewardAmount = await getIDOANSRewardAmount();
-      let USDTRewardAmount = await getIDOUSDTRewardAmount();
-      let iDORemainNft = await getIDORemainNft();
-      console.log(iDORemainNft);
-      // console.log(ANSRewardAmount, USDTRewardAmount);
-      // let ANSReleasedAmount = await getIDOReleasedAmount();
       if(ANSObtained.amount > 0) {
         this.ansObtainedAmount = ANSObtained.amount;
         this.isPay = true;
@@ -951,12 +979,18 @@ export default {
       if(ANSObtained.total > 0) {
         this.ansReleasedAmount = ANSObtained.total;
       }
+      let ANSRewardAmount = await getIDOANSRewardAmount();
       if(ANSRewardAmount > 0) {
         this.ansRewardAmount = ANSRewardAmount;
       }
+      let USDTRewardAmount = await getIDOUSDTRewardAmount();
       if(USDTRewardAmount > 0) {
         this.usdtRewardAmount = USDTRewardAmount;
       }
+      let iDORemainNft = await getIDORemainNft();
+      console.log(iDORemainNft);
+      // console.log(ANSRewardAmount, USDTRewardAmount);
+      // let ANSReleasedAmount = await getIDOReleasedAmount();
       if(iDORemainNft && iDORemainNft.balance) {
         this.remainingNFTReward = Number(iDORemainNft.balance);
       }
@@ -1009,7 +1043,7 @@ export default {
     },
     creatQrCode() {
       let a = new QRCode(this.$refs.qrCodeUrl, {
-        text: window.location.href + `?utm=${this.address}`, // 需要转换为二维码的内容
+        text: window.location.host + window.location.pathname + `#/ido?utm=${this.address}`,
         width: this.screenWidth >= 600 ? 180 : 150,
         height: this.screenWidth >= 600 ? 180 : 150,
         colorDark: "black", //#000000为黑色
@@ -1080,6 +1114,9 @@ export default {
       width: 90%;
       margin: 0 auto 0;
       color: #fff;
+      .events-none {
+        pointer-events: none;
+      }
       .banner {
         padding: 0;
         margin: 0;

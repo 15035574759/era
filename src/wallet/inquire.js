@@ -326,6 +326,7 @@ export  const getIDOUserInfo = async function () {
   let total = 0;
   await contract.methods.userInfo(account).call(function (error, result) {
     if (!error) {
+      console.log("ANS待释放数量：", result);
       if(result.amount) {
         amount  = fromWei(result.amount , 18)
       }
