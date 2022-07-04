@@ -908,7 +908,7 @@ export default {
     },
     startApprove() { //批准USDT
       this.approvedLoading = true;
-      approve(CONFIG.IDOUsToken, CONFIG.IDOToken).then((hash) => {
+      approve(CONFIG.IDOUsToken, CONFIG.IDOToken, 100).then((hash) => {
         // console.log(result);
         if(hash) {
           this.approve = true;

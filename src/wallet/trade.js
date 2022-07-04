@@ -638,7 +638,7 @@ export const farmsLPApprove = async function (){
 
 
 // 授权
-export const approve =  function (tokenAddress, otherAddress ,  amount , decimals) {
+export const approve =  function (tokenAddress, otherAddress ,  amount , decimals=18) {
   console.log('tokenAddress',tokenAddress);
   console.log('approveAddress',otherAddress);
   const account = window.newVue.$store.state.base.address;
