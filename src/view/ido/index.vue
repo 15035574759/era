@@ -552,7 +552,7 @@
           <span slot="footer" class="dialog-footer">
             <!-- <div class="pay-yes" @click="startApprove()">{{ $t('ido-Approved') }}</div> -->
             <!-- <div v-if="!approve" class="extract-dialog-max" style="margin: 0 auto" @click="startApprove()">{{ $t('ido-Approved') }}</div> -->
-            <div class="extract-dialog-max" style="margin: 0 auto" @click="buildInviteAddress()">{{ $t('ido-confirm') }}</div>
+            <div style="margin: 0 auto" @click="buildInviteAddress()" :class="['extract-dialog-max', buildInviteLoading ? 'events-none' : '']" v-loading="buildInviteLoading">{{ $t('ido-confirm') }}</div>
           </span>
       </el-dialog>
 
