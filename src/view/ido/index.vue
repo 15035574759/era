@@ -816,7 +816,7 @@ export default {
   },
   methods: {
     utmAddressHref() {
-      return window.location.origin + "?utm=" + this.inviteAddress;
+      return window.location.href + "?utm=" + this.inviteAddress;
     },
     extractStart() { //开始提取
       this.trading = true;

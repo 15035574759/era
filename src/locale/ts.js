@@ -48,7 +48,7 @@ export default {
     'ido-ReceiveNFT': '接收 NFT',
     'ido-NONFT': '沒有 NFT',
     'ido-NFTReceived': '收到的 NFT',
-    'ido-obtained': '獲得',
+    'ido-obtained': '待释放',
     'ido-to-be-released': '待發布',
     'ido-balance': '餘額',
     'ido-please-inviter-address': `請輸入邀請人地址`,
