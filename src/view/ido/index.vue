@@ -606,20 +606,17 @@
           />
         </div>
         <div class="main">
-          <el-row>
+          <!-- <el-row>
               <el-col :span="24" align="center">
-                <!-- <div :class="[changeDirectpushState==0?'get':'get-no']" style="margin: 0 auto" @click="changeDirectpush(0)">Direct push</div> -->
+                <div :class="[changeDirectpushState==0?'get':'get-no']" style="margin: 0 auto" @click="changeDirectpush(0)">Direct push</div>
                 <div style="color:#fff;"> {{ $t('ido-total-quote') }} </div> 
                 <div class="seeANS">
                   <div>0.00 ANS</div>
                 </div>
               </el-col>
-              <!-- <el-col :span="24" align="center">
-                <div :class="[changeDirectpushState==1?'get':'get-no']" style="margin: 0 auto" @click="changeDirectpush(1)">NFT Rewards</div>
-              </el-col> -->
-          </el-row>
+          </el-row> -->
           <div class="tableList">
-            <div class="listui">
+            <div class="listui" v-if="LevelLists.length">
               <div class="listli" v-for="item in LevelLists" :key="item" >
                 <!-- <div class="li">
                   <div>2022-06-09 11:20:14</div>
@@ -634,6 +631,7 @@
               </div> -->
 
             </div>
+            <div class="listui empty" v-else>no data</div>
           </div>
          
         </div>
@@ -1707,7 +1705,13 @@ export default {
           }
         }
       }
-
+      .empty {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+        margin-top: -10px;
+      }
       .tableList{  //改
           color:#fff;
           margin-top: 10px;
