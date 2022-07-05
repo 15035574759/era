@@ -326,7 +326,7 @@ export  const getIDOUserInfo = async function () {
   let total = 0;
   await contract.methods.userInfo(account).call(function (error, result) {
     if (!error) {
-      console.log("ANS待释放数量：", result);
+      console.log("ANS可领取数量：", result);
       if(result.amount) {
         amount  = fromWei(result.amount , 18)
       }
@@ -342,6 +342,25 @@ export  const getIDOUserInfo = async function () {
     amount: amount,
     total: total,
   };
+}
+
+// 获取IDO待释放数量
+export  const getIDOUserPending = async function () {
+  const account = window.newVue.$store.state.base.address;
+  const contract = new web3.eth.Contract(IDOAbi, CONFIG.IDOToken);
+  let amount = 0;
+  await contract.methods.getUserPending(account).call(function (error, result) {
+    if (!error) {
+      console.log("ANS待释放数量：", result);
+      if(result) {
+        amount  = fromWei(result , 18)
+      }
+      console.log('getUserPending' , result )
+    } else   {
+      console.log('getUserPending_err',error)
+    }
+  });
+  return amount;
 }
 
 // 获取IDO待释放数量

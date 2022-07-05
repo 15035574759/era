@@ -682,7 +682,7 @@
 import QRCode from "qrcodejs2";
 import { mapState } from "vuex";
 import { approve, IDOPayDeposit, IDOHarvest, IDOAnsRewardHarvest, IDOUsdtRewardHarvest, IDOClaimNftReward, IDOBindInvite } from "@/wallet/trade";
-import {isApproved, getIDOUserInfo, getIDOANSRewardAmount, getIDOUSDTRewardAmount, getIDOOneLevelLists, getIDORemainNft} from "@/wallet/inquire";
+import {isApproved, getIDOUserInfo, getIDOANSRewardAmount, getIDOUSDTRewardAmount, getIDOOneLevelLists, getIDORemainNft, getIDOUserPending} from "@/wallet/inquire";
 import CONFIG from '@/wallet/address.js'
 import {addressCheck} from "../../utils/tool";
 export default {
@@ -972,13 +972,15 @@ export default {
       });
     },
     async getIdoAmount() { //获取IDO数量
+        let ANSUserPending = await getIDOUserPending();
+      if(ANSUserPending > 0) {
+        this.ansObtainedAmount = ANSUserPending;
+      }
+
       let ANSObtained = await getIDOUserInfo();
       if(ANSObtained.amount > 0) {
-        this.ansObtainedAmount = ANSObtained.amount;
+        this.ansReleasedAmount = ANSObtained.amount;
         this.isPay = true;
-      }
-      if(ANSObtained.total > 0) {
-        this.ansReleasedAmount = ANSObtained.total;
       }
       let ANSRewardAmount = await getIDOANSRewardAmount();
       if(ANSRewardAmount > 0) {
