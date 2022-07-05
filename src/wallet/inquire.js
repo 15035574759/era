@@ -462,20 +462,25 @@ export const getIDORemainNft = async function () {
   };
 }
 
-// export const isNTFApproved = async function (tokenAddress, decimals, amount , otherAddress) {
-//   console.log('检查授权' , amount);
-//   const account = window.newVue.$store.state.base.address;
-//   const tokenContract = new web3.eth.Contract(tokenAbi, tokenAddress);
-//   let contract = otherAddress || window.newVue.$store.state.base.poolAddress
-//   let approveAmount = 0;
-//   await tokenContract.methods.allowance(account, contract).call(function (error, result) {
-//     if (error) {
-//       return false;
-//     }else   {
-//       console.log('allowance_err',error)
-//     }
-//     approveAmount = result;
-//     console.log('result', result)
-//   })
-//   return Number(toWei(amount.toString(), decimals)) < approveAmount;
-// }
+// 获取余额
+export async function getBalance(tokenAddress, decimals , poolAddress) {
+  const address = poolAddress || window.newVue.$store.state.base.address;
+  if(!address || address == undefined || address == '') {
+    return 0;
+  }
+  let balance = 0;
+  if(tokenAddress === '0x0000000000000000000000000000000000000000'){
+    balance = await new web3.eth.getBalance(address)
+    return fromWei(balance, decimals)
+  }
+
+  const contract = new web3.eth.Contract(IDODsgNftABI, tokenAddress);
+  await contract.methods.balanceOf(address).call(function (error, result) {
+    if (!error) {
+      balance = fromWei(result, decimals);
+    }else {
+      console.log('balanceErr' , error);
+    }
+  });
+  return balance;
+}

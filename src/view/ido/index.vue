@@ -682,7 +682,7 @@
 import QRCode from "qrcodejs2";
 import { mapState } from "vuex";
 import { approve, IDOPayDeposit, IDOHarvest, IDOAnsRewardHarvest, IDOUsdtRewardHarvest, IDOClaimNftReward, IDOBindInvite } from "@/wallet/trade";
-import {isApproved, getIDOUserInfo, getIDOANSRewardAmount, getIDOUSDTRewardAmount, getIDOOneLevelLists, getIDORemainNft, getIDOUserPending} from "@/wallet/inquire";
+import {isApproved, getIDOUserInfo, getIDOANSRewardAmount, getIDOUSDTRewardAmount, getIDOOneLevelLists, getIDORemainNft, getIDOUserPending, getBalance} from "@/wallet/inquire";
 import CONFIG from '@/wallet/address.js'
 import {addressCheck} from "../../utils/tool";
 export default {
@@ -788,6 +788,7 @@ export default {
       extractLoading: false,
       buildInviteLoading: false,
       claimNftLoading: false,
+      usdtBalance: 0,
     };
   },
   created() {
@@ -831,7 +832,6 @@ export default {
       return window.location.origin + window.location.pathname + "#/ido?utm=" + this.inviteAddress;
     },
     extractStart() { //开始提取
-      this.extractLoading = true;
       let _contractName = '';
       if(this.extractAmountValue <= 0) {
         // this.$notify({
@@ -849,6 +849,7 @@ export default {
       if(this.extractDetailsName === 'USDT') {
         _contractName = IDOUsdtRewardHarvest;
       }
+      this.extractLoading = true;
       _contractName(this.extractAmountValue).then(async(hash) => {
         if(hash) {
           this.extractLoading = false;
@@ -921,6 +922,13 @@ export default {
       });
     },
     payUsdtOrANS() { //100 USDT get 1000 ANS 绑定推荐关系
+      if(this.usdtBalance < 100) {
+          this.$notify({
+            message: "USDT Insufficient balance",
+            type: "error",
+          });
+          return false;
+      }
       this.payLoading = true;
       IDOPayDeposit(this.payUsdtOrAnsAmount, this.inviteAddress).then((hash) => {
         console.log(hash);
@@ -973,7 +981,8 @@ export default {
       });
     },
     async getIdoAmount() { //获取IDO数量
-        let ANSUserPending = await getIDOUserPending();
+      this.usdtBalance = await getBalance(CONFIG.IDOUsToken, 18);
+      let ANSUserPending = await getIDOUserPending();
       if(ANSUserPending > 0) {
         this.ansObtainedAmount = ANSUserPending;
       }
