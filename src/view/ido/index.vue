@@ -5,7 +5,7 @@
         class="banner"
         :style="`background-image: url(${bannerbjIMg});background-size: cover;`"
       >
-        <div style="font-size:28px;position: relative;top: 20px;">{{ $t('ido-Countdown') }}</div>
+        <div style="font-size:28px;position: relative;top: 20px;color:#70F4A5;">{{ $t('ido-Countdown') }}</div>
         <div class="countdown">
           <div>{{ day + "d" }}</div>
           <div>{{ hr + "h" }}</div>
@@ -16,7 +16,7 @@
       <el-row :gutter="20" class="buy-box">
         <el-col :span="screenWidth >= 600 ? 12 : 24">
           <div class="left approved">
-            <div style="text-align: center">100 USDT {{ $t('ido-get') }} 1000 ANS</div>
+            <div style="text-align: center;color:#70F4A5;">100 USDT {{ $t('ido-get') }} 1000 ANS</div>
             <div class="approved-pay" v-if="approve">
               <img src="@/assets/img/ido/approved-yes.png" alt width="100" />
               <span>{{$t('ido-Approved')}}</span>&nbsp;&nbsp;
@@ -56,7 +56,7 @@
         ></el-col>
         <el-col :span="screenWidth >= 600 ? 12 : 24">
           <div class="right">
-            <div style="text-align: center">IDO</div>
+            <div style="text-align: center;color:#70F4A5;">IDO</div>
             <div class="input" style="width: 100%">
               <el-input v-model="ansObtainedAmount" placeholder="0.00" :readonly="true">
                 <div slot="prefix" class="ans-obtained">ANS {{ $t('ido-obtained') }}</div>
@@ -85,7 +85,7 @@
       <el-row :gutter="20" class="buy-box">
         <el-col :span="screenWidth >= 600 ? 12 : 24">
           <div class="left">
-            <div style="text-align: center">ANS</div>
+            <div style="text-align: center;color:#70F4A5;">ANS</div>
             <div class="input">
               <el-input v-model="ansRewardAmount" placeholder="0.00" :readonly="true">
                 <div slot="prefix" class="ans-obtained">ANS</div>
@@ -104,7 +104,7 @@
         ></el-col>
         <el-col :span="screenWidth >= 600 ? 12 : 24">
           <div class="right">
-            <div style="text-align: center">USDT</div>
+            <div style="text-align: center;color:#70F4A5;">USDT</div>
             <div class="input">
               <el-input v-model="usdtRewardAmount" placeholder="0.00" :readonly="true">
                 <div slot="prefix" class="ans-obtained">USDT</div>
@@ -137,7 +137,7 @@
               <div @click="showBind()">{{ $t('ido-BindSuperior') }}</div>
             </div>
           </el-col>
-          <el-col :span="screenWidth >= 600 ? 14 : 24" style="padding-top: 80px">
+          <el-col :span="screenWidth >= 600 ? 14 : 24" style="padding-top: 110px">
             <div class="save-code">
               <!-- <div style="padding-bottom: 20px">
                 Save QR code &nbsp;&nbsp;<img
@@ -146,8 +146,8 @@
                   width="20"
                 />
               </div> -->
-              <div style="padding-bottom: 20px">IDO {{ $t('ido-pushed') }}</div>
-              <div style="color:#70F4A5;font-weight: 800;font-size:24px"> {{ countNFTReward }} </div>
+              <div style="padding-bottom: 10px">IDO {{ $t('ido-pushed') }}: {{ countNFTReward }}</div>
+              <!-- <div style="color:#70F4A5;font-weight: 800;font-size:24px"> {{ countNFTReward }} </div> -->
             </div>
             <div class="details-button">
               <div class="details" @click="showDirect()">{{ $t('ido-DirectPushDetails') }}</div>
@@ -235,7 +235,7 @@
           <el-col :span="screenWidth >= 600 ? 12 : 24">
             <div class="bottom-box">
               <div class="left">
-                IDO {{ $t('ido-Rule') }}
+                <font color="#70F4A5">IDO {{ $t('ido-Rule') }}</font>
                 <div class="botimg">
                   <div>
                     <img src="@/assets/img/ido/ans.png" alt="" srcset="">
@@ -260,7 +260,7 @@
           <el-col :span="screenWidth >= 600 ? 12 : 24">
             <div class="bottom-box">
               <div class="right">
-                {{ $t('ido-MedalFreedom') }}
+                <font color="#70F4A5">{{ $t('ido-MedalFreedom') }}</font>
                 <div class="botimg">
                   <div>
                     <img src="@/assets/img/ido/angle.png" alt="" srcset="">
@@ -1156,7 +1156,7 @@ export default {
             color: #333;
             text-align: center;
             display: inline-grid;
-            color: #fff;
+            color: #70F4A5;
           }
         }
       }
@@ -1309,22 +1309,22 @@ export default {
           width: 330px;
           line-height: 120px;
           height: 100px;
-          color: #333;
+          color: #70F4A5;
           text-align: center;
           display: inline-grid;
-          color: #fff;
+          // color: #fff;
           font-size: 25px;
         }
       }
       .promote-box {
+        background: url(../../assets/img/ido/rule-bg.png) no-repeat center;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: #26352c;
         font-size: 18px;
         margin-top: 70px;
         background-color: #26352c;
-        // height: 500px;
         border-radius: 20px;
-        // padding-left: 100px;
-        // padding-right: 100px;
-        // padding-right: 100px;
         padding: 0 100px 30px 100px;
         .save-code {
           float: left;
@@ -1405,9 +1405,9 @@ export default {
         }
         .receive{
           display: flex;
-          justify-content: right;
+          justify-content: center;
           margin-top: 150px;
-          margin-right:-70px;
+          // margin-right:-70px;
           div{
             background: url(../../assets/img/ido/receive.png) no-repeat center;
             background-size: contain;
@@ -1831,6 +1831,7 @@ export default {
               font-weight: 800;
               //   width: 80%;
               border: unset;
+              padding: 0;
               // display: flex;
             }
             .el-input__suffix {
@@ -1869,6 +1870,14 @@ export default {
 .main {
   .caintner {
     .promote-box{
+      background: url(../../assets/img/ido/rule-bg.png) no-repeat center;
+      // background-repeat: no-repeat;
+      // background-position: center;
+      // background-color: #26352c;
+      // font-size: 18px;
+      // margin-top: 70px;
+      // background-color: #26352c;
+      // border-radius: 20px;
       padding-right:0px;
       padding-left:0px;
       .qrcode {
