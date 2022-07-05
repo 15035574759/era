@@ -1369,13 +1369,17 @@ export default {
         .save-code {
           float: left;
           padding-left: 20px;
+          div {
+            padding-top: 13px;
+          }
         }
         .details-button {
           float: right;
           // 改s
           .details{
-            width:151px;
+            width:181px;
             height:49px;
+            font-size: 16px;;
             background-size: 100% 100%;
           }
         }
