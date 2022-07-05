@@ -1020,7 +1020,11 @@ export default {
       if(this.countNFTReward > 0) {
         if(this.countNFTReward == 5 || this.countNFTReward == 10 || this.countNFTReward == 15 || this.countNFTReward == 20 || this.countNFTReward == 25 || this.countNFTReward == 30) {
           console.log(this.countNFTReward);
-          return true;
+          if(this.remainingNFTReward > 0) {
+            return true;
+          } else {
+            return false;
+          }
         } else {
           console.log(this.countNFTReward);
           return false;
