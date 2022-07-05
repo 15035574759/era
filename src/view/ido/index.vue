@@ -615,8 +615,8 @@
                 </div>
               </el-col>
           </el-row> -->
-          <div class="tableList">
-            <div class="listui" v-if="LevelLists.length">
+          <div class="tableList" v-if="LevelLists.length">
+            <div class="listui">
               <div class="listli" v-for="item in LevelLists" :key="item" >
                 <!-- <div class="li">
                   <div>2022-06-09 11:20:14</div>
@@ -631,8 +631,8 @@
               </div> -->
 
             </div>
-            <div class="listui empty" v-else>no data</div>
           </div>
+          <div class="empty" v-else>no data</div>
          
         </div>
       </el-dialog>
@@ -1706,11 +1706,15 @@ export default {
         }
       }
       .empty {
+        color: #fff;
+        // margin-top: 10px;
+        height: 200px;
+        overflow: auto;
         display: flex;
         align-items: center;
         justify-content: space-around;
         flex-direction: column;
-        margin-top: -10px;
+        // margin-top: 10px;
       }
       .tableList{  //改
           color:#fff;
