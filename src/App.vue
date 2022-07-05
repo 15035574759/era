@@ -49,17 +49,17 @@
             </li>
           </ul>
           <div class="navimg">
-            <el-dropdown trigger="click" @command="clickLanguageDropdown">
+            <el-dropdown trigger="click">
               <!-- <img v-if="language === 'en'" src="./assets/img/en.png" alt class="luange" /> -->
               <span class="el-dropdown-link">
-                <img v-if="language === 'en'" src="./assets/img/en.png" alt class="luange" />
-                <img v-if="language === 'ts'" src="./assets/img/zh.png" alt class="luange" />
-                <i class="el-icon-arrow-down el-icon--right"></i>
+                <img v-if="language === 'en'" src="./assets/img/en.png" alt class="luange" @click="clickLanguageDropdown('ts')" />
+                <img v-if="language === 'ts'" src="./assets/img/zh.png" alt class="luange" @click="clickLanguageDropdown('en')" />
+                <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
               </span>
-              <el-dropdown-menu slot="dropdown">
+              <!-- <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="en">EN</el-dropdown-item>
                 <el-dropdown-item command="ts">繁體中文</el-dropdown-item>
-              </el-dropdown-menu>
+              </el-dropdown-menu> -->
             </el-dropdown>
             <div v-if="!connected">
               <div @mouseover="enter" v-if="mouse" class="connect-wallet" @click="linkShow">{{ $t('nav-ConnentWallect') }}</div>
@@ -129,17 +129,17 @@
         >
           <div class="navimgList">
             <!-- <img src="./assets/img/en.png" alt class="luange" /> -->
-            <el-dropdown trigger="click" class="luange" @command="clickLanguageDropdown">
+            <el-dropdown trigger="click" class="luange" style="height: 0.38rem;">
               <!-- <img src="./assets/img/en.png" alt class="luange" /> -->
               <span class="el-dropdown-link">
-                <img v-if="language === 'en'" src="./assets/img/en.png" alt class="luange" />
-                <img v-if="language === 'ts'" src="./assets/img/zh.png" alt class="luange" />
-                <i class="el-icon-arrow-down el-icon--right"></i>
+                <img v-if="language === 'en'" src="./assets/img/en.png" alt class="luange" @click="clickLanguageDropdown('ts')" />
+                <img v-if="language === 'ts'" src="./assets/img/zh.png" alt class="luange" @click="clickLanguageDropdown('en')" />
+                <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
               </span>
-              <el-dropdown-menu slot="dropdown">
+              <!-- <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="en">English</el-dropdown-item>
                 <el-dropdown-item command="ts">繁體中文</el-dropdown-item>
-              </el-dropdown-menu>
+              </el-dropdown-menu> -->
             </el-dropdown>
             <div v-if="!connected">
               <div @mouseover="enter" v-if="mouse" class="connect-wallet package" @click="linkShow">{{ $t('nav-ConnentWallect') }}</div>
@@ -626,12 +626,12 @@ body {
 }
 #app {
   color: #fff;
-  font-family: "Share-Tech";
+  font-family: "ProximaNova-Extrabld, ProximaNova";
   background: rgba(19, 29, 23, 1);
   overflow-x: hidden;
 }
 #app div {
-  font-family: "Share-Tech";
+  font-family: "ProximaNova-Extrabld, ProximaNova";
 }
 .tittleFont {
   font-family: "ProximaNova-Xbold.woff" !important;
@@ -885,6 +885,7 @@ body {
 .navimg {
   height: 100%;
   .el-dropdown-link {
+    cursor: pointer;
     color: #fff;
   }
 

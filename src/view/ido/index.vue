@@ -5,7 +5,7 @@
         class="banner"
         :style="`background-image: url(${bannerbjIMg});background-size: cover;`"
       >
-        <div style="font-size:28px;position: relative;top: 20px;color:#70F4A5;">{{ $t('ido-Countdown') }}</div>
+        <div class="ido-countdown">{{ $t('ido-Countdown') }}</div>
         <div class="countdown">
           <div>{{ day + "d" }}</div>
           <div>{{ hr + "h" }}</div>
@@ -18,15 +18,18 @@
           <div class="left approved">
             <div style="text-align: center;color:#70F4A5;">100 USDT {{ $t('ido-get') }} 1000 ANS</div>
             <div class="approved-pay" v-if="approve">
-              <img src="@/assets/img/ido/approved-yes.png" alt width="100" />
+              <div class="approved-yes-img"></div>
+              <!-- <img src="@/assets/img/ido/approved-yes.png" alt :width="this.screenWidth >= 600 ? 100 : 90" /> -->
               <span>{{$t('ido-Approved')}}</span>&nbsp;&nbsp;
               <div v-loading="payLoading" v-if="!isPay" :class="['pay-yes', payLoading ? 'events-none' : '']" @click="payUsdtOrANS()">{{ $t('ido-Pay') }}</div>
               <div v-else class="pay-no">{{ $t('ido-Pay') }}</div>
             </div>
-            <div class="approved-pay" v-if="!approve">
-              <img src="@/assets/img/ido/approved-no.png" alt width="100" />
+            <div class="approved-pay" v-else>
+              <div class="approved-no-img"></div>
+              <!-- <img src="@/assets/img/ido/approved-no.png" alt :width="this.screenWidth >= 600 ? 100 : 90" /> -->
               <span style="color: #ffffff">{{ $t('ido-Unapproved') }}</span>&nbsp;&nbsp;
-              <div v-loading="approvedLoading" :class="['pay-yes', approvedLoading ? 'events-none' : '']" @click="startApprove()">{{ $t('ido-Approved') }}</div>
+              <div v-loading="approvedLoading" v-if="!isPay" :class="['pay-yes', approvedLoading ? 'events-none' : '']" @click="startApprove()">{{ $t('ido-Approved') }}</div>
+              <div v-else class="pay-no">{{ $t('ido-Pay') }}</div>
             </div>
             <div class="approved-pay-steps">
               <div class="steps">
@@ -35,7 +38,7 @@
                 <div :class="[isPay ? 'wire-success' : 'wire']"></div>
                 <!-- wire-success -->
                 <!-- <img src="@/assets/img/ido/step-02.png" alt width="20" /> -->
-                <img :src="require(`@/assets/img/ido/${isPay ? `success-01` : `step-02`}.png`)" alt width="25" />
+                <img :src="require(`@/assets/img/ido/${approve && isPay ? `success-01` : `step-02`}.png`)" alt width="25" />
               </div>
               <!-- <el-steps
                 :align-center="true"
@@ -696,7 +699,7 @@ export default {
     }),
     utmAddress(){
         // return window.origin + `/#/ido?utm=${this.address}`
-        return window.location.host + window.location.pathname + `/#/ido?utm=${this.address}`
+        return window.location.origin + window.location.pathname + `/#/ido?utm=${this.address}`
     }
   },
   data() {
@@ -824,7 +827,7 @@ export default {
   },
   methods: {
     utmAddressHref() {
-      return window.location.host + window.location.pathname + "#/ido?utm=" + this.inviteAddress;
+      return window.location.origin + window.location.pathname + "#/ido?utm=" + this.inviteAddress;
     },
     extractStart() { //开始提取
       this.extractLoading = true;
@@ -1041,7 +1044,7 @@ export default {
     },
     creatQrCode() {
       let a = new QRCode(this.$refs.qrCodeUrl, {
-        text: window.location.host + window.location.pathname + `#/ido?utm=${this.address}`,
+        text: window.location.origin + window.location.pathname + `#/ido?utm=${this.address}`,
         width: this.screenWidth >= 600 ? 180 : 150,
         height: this.screenWidth >= 600 ? 180 : 150,
         colorDark: "black", //#000000为黑色
@@ -1132,6 +1135,14 @@ export default {
         justify-content: space-around;
         flex-direction: column;
         font-size: 16px;
+        font-weight: 800;
+        .ido-countdown {
+          font-size:20px;
+          font-weight: 800;
+          position: relative;
+          top: 20px;
+          color:#70F4A5;
+        }
         .countdown {
           background: url(../../assets/img/ido/countdown.png) no-repeat center;
           background-size: contain;
@@ -1144,7 +1155,7 @@ export default {
           // margin-top: -16px;
           div {
             position: relative;
-            top:24px;
+            top:25px;
             background: url(../../assets/img/ido/countdown-span.png) no-repeat
               center;
             background-size: contain;
@@ -1155,12 +1166,15 @@ export default {
             text-align: center;
             display: inline-grid;
             color: #70F4A5;
+            font-family: "ProximaNova-Extrabld, ProximaNova";
           }
         }
       }
       .buy-box {
         margin-top: 30px;
         font-size: 18px;
+        font-weight: 800;
+        font-family: "ProximaNova-Extrabld, ProximaNova";
         .approved {
           justify-content:center !important;
         }
@@ -1173,6 +1187,8 @@ export default {
           height: 250px;
           background-color: #26352c;
           border-radius: 20px;
+          font-weight: 900;
+          font-family: "ProximaNova-Extrabld, ProximaNova";
           // text-align: center;
           // border: 1px solid red;
           .approved-pay {
@@ -1180,15 +1196,37 @@ export default {
             display: flex;
             align-items: center;
             justify-content: center;
+            .approved-yes-img {
+              background: url(../../assets/img/ido/approved-yes.png) no-repeat center;
+              background-size: contain;
+              width: 120px;
+              line-height: 90px;
+              height: 90px;
+              text-align: center;
+              cursor: pointer;
+            }
+            .approved-no-img {
+              background: url(../../assets/img/ido/approved-no.png) no-repeat center;
+              background-size: contain;
+              width: 120px;
+              line-height: 90px;
+              height: 90px;
+              text-align: center;
+              cursor: pointer;
+            }
+            span {
+              font-size: 12px;
+            }
             .pay-yes {
               background: url(../../assets/img/ido/pay-yes.png) no-repeat center;
               background-size: contain;
-              width: 180px;
-              line-height: 80px;
-              height: 80px;
+              width: 200px;
+              line-height: 90px;
+              height: 90px;
               color: #333;
               text-align: center;
               cursor: pointer;
+              font-size: 16px;
             }
             .pay-no {
               background: url(../../assets/img/ido/pay-no.png) no-repeat center;
@@ -1265,6 +1303,8 @@ export default {
           background-color: #26352c;
           border-radius: 20px;
           text-align: center;
+          font-weight: 900;
+          font-family: "ProximaNova-Extrabld, ProximaNova";
           .input {
             width: 70%;
             .el-input__inner {
@@ -1300,6 +1340,8 @@ export default {
       .rewards {
         margin-top: 50px;
         text-align: center;
+        font-weight: 900;
+        font-family: "ProximaNova-Extrabld, ProximaNova";
         .rewards-box {
           //rewards
           background: url(../../assets/img/ido/rewards.png) no-repeat center;
@@ -1483,15 +1525,16 @@ export default {
         }
         .bottom-box {
           width: 100%;
-          height: 350px;
+          height: 380px;
           margin-top: 30px;
           display: flex;
           justify-content: space-between;
           text-align: center;
+          font-weight: 900;
           .left{
             // width:48%;
             background-color: #161d18;
-            padding:20px 60px;
+            padding:20px 20px;
             border-radius: 8px;
             box-sizing: border-box;
             .botimg{
@@ -1507,12 +1550,14 @@ export default {
             .textb{
               font-size: 7px;
               text-align: left;
+              color: #ffffffb5;
+              font-weight: 400;
             }
           }
           .right{
             // width:46%;
             background-color: #161d18;
-            padding:20px 16px;
+            padding:20px 5px;
             border-radius: 8px;
             box-sizing: border-box;
 
@@ -1529,6 +1574,8 @@ export default {
             .textb{
               font-size: 7px;
               text-align: left;
+              color: #ffffffb5;
+              font-weight: 400;
             }
           }
         }
@@ -1877,6 +1924,22 @@ export default {
 }
 .main {
   .caintner {
+    .banner {
+      .countdown {
+        width: 330px;
+        height: 125px;
+        margin: 0 auto;
+      }
+    }
+    .buy-box {
+      .left {
+        .approved-pay  {
+          span {
+            font-size: 13px;
+          }
+        }
+      }
+    }
     .promote-box{
       background: url(../../assets/img/ido/rule-bg.png) no-repeat center;
       // background-repeat: no-repeat;
@@ -1892,7 +1955,7 @@ export default {
         width: 320px;
         margin-top: -100px;
         .address {
-          top: 180px;
+          top: 160px;
           width: 300px;
           padding: 0;
         }
@@ -1933,7 +1996,7 @@ export default {
         margin-right:0;
       }
       .bottom-box{
-        height: 373px;
+        height: auto;
         // display: block;
         // position: absolute;
         .left,.right{
