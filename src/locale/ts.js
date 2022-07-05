@@ -18,7 +18,7 @@ export default {
     'ido-IdoReleaseDetails': 'IDO 發布細節',
     'ido-RewardDetails': '獎勵詳情',
     'ido-Rewards': '獎勵',
-    'ido-pushed': '直推',
+    'ido-pushed': '有效直推',
     'ido-DirectPushDetails': '直推詳情',
     'ido-DirectPushList': '直推列表',
     'ido-CopyLink': '複製鏈接',
