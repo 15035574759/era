@@ -149,7 +149,7 @@
                   width="20"
                 />
               </div> -->
-              <div style="padding-bottom: 10px">IDO {{ $t('ido-pushed') }}: {{ countNFTReward }}</div>
+              <div style="padding-bottom: 10px">IDO {{ $t('ido-pushed') }}: {{ inviteNumber }}</div>
               <!-- <div style="color:#70F4A5;font-weight: 800;font-size:24px"> {{ countNFTReward }} </div> -->
             </div>
             <div class="details-button">
@@ -780,6 +780,7 @@ export default {
       extractAmountValue: 0, //输入弹框输入数量
       remainingNFTReward: 0, //剩余NFT奖励
       countNFTReward: 0, //总的NFT奖励
+      inviteNumber: 0, //邀请人数
       countNFTRewardSlider: 0,
       trading: false,
       payLoading: false,
@@ -991,7 +992,7 @@ export default {
         this.usdtRewardAmount = USDTRewardAmount;
       }
       let iDORemainNft = await getIDORemainNft();
-      console.log(iDORemainNft);
+      // console.log(iDORemainNft);
       // console.log(ANSRewardAmount, USDTRewardAmount);
       // let ANSReleasedAmount = await getIDOReleasedAmount();
       if(iDORemainNft && iDORemainNft.balance) {
@@ -1000,6 +1001,9 @@ export default {
       if(iDORemainNft && iDORemainNft.countBalance) {
         this.countNFTReward = Number(iDORemainNft.countBalance) * 5;
         this.countNFTRewardSlider = Number(iDORemainNft.countBalance) >= 1 ? Number(iDORemainNft.countBalance) * 5 : 0;
+      }
+      if(iDORemainNft && iDORemainNft.inviteNum) {
+        this.inviteNumber = iDORemainNft.inviteNum;
       }
       // console.log(ANSObtainedAmount);
     },

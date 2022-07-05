@@ -328,7 +328,7 @@ export  const getIDOUserInfo = async function () {
     if (!error) {
       console.log("ANS可领取数量：", result);
       if(result.amount) {
-        amount  = fromWei(result.amount , 18)
+        amount  = fromWei(result.amount , 18) * 10
       }
       if(result.total) {
         total  = fromWei(result.total , 18)
@@ -435,6 +435,7 @@ export const getIDORemainNft = async function () {
   let list = [];
   let balance = 0;
   let countBalance = 0;
+  let inviteNum = 0;
   await contract.methods.getRemainNft(account).call(function (error, result) {
     console.log('account:' , account )
     console.log('我的NFT奖励:' , result )
@@ -445,6 +446,9 @@ export const getIDORemainNft = async function () {
       if(result && result[1]) {
         countBalance = result[1];
       }
+      if(result && result[2]) {
+        inviteNum = result[2];
+      }
       // list = result;
       // amount  = fromWei(result , 18)
     } else   {
@@ -454,6 +458,7 @@ export const getIDORemainNft = async function () {
   return {
     balance: balance,
     countBalance: countBalance,
+    inviteNum: inviteNum,
   };
 }
 
