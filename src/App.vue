@@ -38,7 +38,7 @@
               >{{ item.name }}</el-menu-item
             >
           </el-menu> -->
-          <ul class="menu" style="width: 70%">
+          <ul class="menu">
             <li
               :class="{'active':defaultOpeneds == item.index,'notAllowed':item.index==3}"
               @click="activeNavabs(key , item.href)"
@@ -49,18 +49,17 @@
             </li>
           </ul>
           <div class="navimg">
-            <el-dropdown trigger="click">
+            <!-- <el-dropdown trigger="click"> -->
               <!-- <img v-if="language === 'en'" src="./assets/img/en.png" alt class="luange" /> -->
               <span class="el-dropdown-link">
                 <img v-if="language === 'en'" src="./assets/img/en.png" alt class="luange" @click="clickLanguageDropdown('ts')" />
                 <img v-if="language === 'ts'" src="./assets/img/zh.png" alt class="luange" @click="clickLanguageDropdown('en')" />
-                <!-- <i class="el-icon-arrow-down el-icon--right"></i> -->
               </span>
               <!-- <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="en">EN</el-dropdown-item>
                 <el-dropdown-item command="ts">繁體中文</el-dropdown-item>
               </el-dropdown-menu> -->
-            </el-dropdown>
+            <!-- </el-dropdown> -->
             <div v-if="!connected">
               <div @mouseover="enter" v-if="mouse" class="connect-wallet" @click="linkShow">{{ $t('nav-ConnentWallect') }}</div>
               <div v-if="!mouse" @mouseleave="out" class="connect-wallet-enter" @click="linkShow">{{ $t('nav-ConnentWallect') }}</div>
@@ -129,7 +128,7 @@
         >
           <div class="navimgList">
             <!-- <img src="./assets/img/en.png" alt class="luange" /> -->
-            <el-dropdown trigger="click" class="luange" style="height: 0.38rem;">
+            <el-dropdown trigger="click" class="luange">
               <!-- <img src="./assets/img/en.png" alt class="luange" /> -->
               <span class="el-dropdown-link">
                 <img v-if="language === 'en'" src="./assets/img/en.png" alt class="luange" @click="clickLanguageDropdown('ts')" />
@@ -885,6 +884,8 @@ body {
 }
 .navimg {
   height: 100%;
+  margin-top: -20px;
+  margin-left: 20px;
   .el-dropdown-link {
     cursor: pointer;
     color: #fff;
@@ -958,7 +959,7 @@ body {
   vertical-align: middle;
 }
 .navimgList .luange {
-  height: .28rem;
+  height: 25px;
   width: auto;
   margin-right: 20px;
   vertical-align: middle;

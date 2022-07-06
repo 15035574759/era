@@ -29,7 +29,7 @@ export default {
     'ido-Rule-02': '2.每個地址參與100U獲得1000 ANS',
     'ido-Rule-03': '3. 直推獲得5% USDT和0.5% ANS獎勵',
     'ido-Rule-04': '4. 間推獲得 4% USDT 和 0.4% ANS 獎勵',
-    'ido-Rule-05': '5. ANS、推廣獎勵等IDO將在倒計時結束後48小時內領取',
+    'ido-Rule-05': '5. 獲得USDT的推廣獎勵可以立即領取，ANS代幣將在IDO結束以後的48小時之內開放提取',
     'ido-MedalFreedom': '天使谷自由勳章： ',
     'ido-MedalFreedom-title': '免費獲取天使谷自由勳章 NFT 規則：',
     'ido-MedalFreedom-01': '1.直推5個IDO獲得1級天使谷自由勳章',

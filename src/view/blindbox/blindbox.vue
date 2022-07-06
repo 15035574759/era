@@ -48,7 +48,7 @@
       </div>
       <div class="count" v-if="this.screenWidth < 600">
         <img src="@/assets/img/mangheicon.png" alt />
-        <p>NTF {{curId}}/5000</p>
+        <p>NTF {{curId}}/1000</p>
       </div>
       <div class="caiterMain" v-loading="userNtfs.loading">
         <el-row>
