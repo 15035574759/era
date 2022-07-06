@@ -72,7 +72,7 @@
                       alt
                     />
                   </div>
-                  <div class="name">ANS/BNB</div>
+                  <div class="name">ANS/USDT</div>
                 </div>
                 <div class="info">
                   <div class="item">
@@ -95,7 +95,7 @@
                 </div>
                 <div class="change">
                   <p>
-                    {{ $t('farms-Staked') }} (ANS/BNB)
+                    {{ $t('farms-Staked') }} (ANS/USDT)
                     <span class="Unstake"
                           v-if="Number(lpToken.userDeposit)"
                           @click="userUnstake"

@@ -26,7 +26,7 @@
             </div>
             <div class="count">
               <img src="@/assets/img/iconInfo.png" alt />
-              <p>NTF {{curId}}/5000</p>
+              <p>NFT {{curId}}/1000</p>
             </div>
           </div>
         </div>

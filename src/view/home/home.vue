@@ -1292,28 +1292,28 @@ export default {
         }
       }
       .btnBox {
-        width: 100%;
+        width: 85%;
         .bannerbtn1 {
           background: url(../../assets/img/bannerbtn1.png) no-repeat center;
           background-size: contain;
-          width: 230px;
-          line-height: 100px;
-          height: 100px;
+          width: 200px;
+          line-height: 80px;
+          height: 80px;
           color: #fff;
           text-align: center;
-          font-size: 20px;
+          font-size: 18px;
           font-weight: 900;
           cursor: pointer;
         }
         .bannerbtn2 {
           background: url(../../assets/img/bannerbtn2.png) no-repeat center;
           background-size: contain;
-          width: 230px;
-          line-height: 100px;
-          height: 100px;
+          width: 200px;
+          line-height: 80px;
+          height: 80px;
           color: #fff;
           text-align: center;
-          font-size: 20px;
+          font-size: 18px;
           font-weight: 900;
           cursor: pointer;
         }

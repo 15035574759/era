@@ -329,8 +329,9 @@ export default {
         { name: this.$t('nav-Market'), activeIndex: "/market", index: "3" },
         // { name: "Pledge Mining", activeIndex: "/arrowheads", index: "4" },
         { name: this.$t('nav-Farms'), activeIndex: "/FARMS", index: "4" },
-        { name: this.$t('nav-RoadMap'), activeIndex: "/homepage", index: "5" },
-        { name: this.$t('nav-BuyAns'), href: "https://pancakeswap.finance/swap", index: "6" },
+        { name: this.$t('nav-AngelVillage'), activeIndex: "/market", index: "5" },
+        { name: this.$t('nav-RoadMap'), activeIndex: "/homepage", index: "6" },
+        { name: this.$t('nav-BuyAns'), activeIndex: '',  href: "https://pancakeswap.finance/swap", index: "7" },
         // { name: "Contract" },
         // { name: "Backstage" }
       ];
