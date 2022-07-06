@@ -40,7 +40,7 @@
           </el-menu> -->
           <ul class="menu">
             <li
-              :class="{'active':defaultOpeneds == item.index,'notAllowed':item.index==3}"
+              :class="{'active':defaultOpeneds == item.index,'notAllowed':item.index==4 || item.index==6}"
               @click="activeNavabs(key , item.href)"
               v-for="(item, key) in leftNavItems"
               :key="key"
