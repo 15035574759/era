@@ -431,7 +431,7 @@ export const getIDOOneLevelLists = async function () {
 // 获取nft奖励
 export const getIDORemainNft = async function () {
   const account = window.newVue.$store.state.base.address;
-  const contract = new web3.eth.Contract(IDODsgNftABI, CONFIG.IDODsgNftDeployed);
+  const contract = new web3.eth.Contract(IDODsgNftABI, CONFIG.DsgNft);
   let list = [];
   let balance = 0;
   let countBalance = 0;
