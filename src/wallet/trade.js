@@ -996,7 +996,7 @@ export const IDOAnsRewardHarvest = async function ( amount ){
 export const IDOClaimNftReward = async function ( amount ){
   console.log(amount)
   const address = window.newVue.$store.state.base.address;
-  const contractAddress = CONFIG.IDODsgNftDeployed
+  const contractAddress = CONFIG.DsgNft
   const contract = new web3.eth.Contract(IDODsgNftABI, contractAddress);
   amount = web3.utils.toHex(toWei(amount , 18))
   let encodedABI = contract.methods.claimNftReward(amount).encodeABI();
