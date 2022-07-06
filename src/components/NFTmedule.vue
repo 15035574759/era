@@ -58,7 +58,7 @@
               <div class="tbHeader">
                 <span>name</span>
                 <span>ID</span>
-<!--                <span>Opeartion</span>-->
+               <span>Opeartion</span>
               </div>
               <div class="tbody">
                 <div class="dataNo" v-if="!showList.loading&&!showList.list.length">
@@ -66,7 +66,7 @@
                   <p class="textNO">No data</p>
                 </div>
                 <div
-                  v-for="(item, index) in showList.list"
+                  v-for="(item , index) in showList.list"
                   :key="index"
                   class="item" >
                   <div
@@ -79,25 +79,12 @@
                     <p>{{item.name}}</p>
                   </div>
                   <div class="width2">{{item.id}}</div>
-<!--                  <div-->
-<!--                    :class="[-->
-<!--                      'width3',-->
-<!--                      dialogWidth == '90%' ? 'width3active' : '',-->
-<!--                    ]"-->
-<!--                    v-if="fatherType === 'FARMS'"-->
-
-<!--                  >-->
-<!--                    &lt;!&ndash; <img v-if="!item.approve" src="../assets/img/ya_approve.png" alt @click="LPStakeNtfApprove(item)" /> &ndash;&gt;-->
-<!--                    &lt;!&ndash; <img v-else src="../assets/img/ya.png" alt @click="LPStakeNtf(item)" /> &ndash;&gt;-->
-<!--                    <img  src="../assets/img/ya.png" alt @click="checkDetail(3 , index)" />-->
-<!--                  </div>-->
-<!--                  <div-->
-<!--                    :class="[-->
-<!--                      'width3',-->
-<!--                      dialogWidth == '90%' ? 'width3active' : '',-->
-<!--                    ]"-->
-<!--                    v-else-->
-<!--                  >-->
+                  <div :class="['width3', dialogWidth == '90%' ? 'width3active' : '']" v-if="fatherType === 'FARMS'">
+                  <img v-if="!item.approve" src="../assets/img/ya_approve.png" alt @click="LPStakeNtfApprove(item)" /> 
+                  <img v-else src="../assets/img/ya.png" alt @click="LPStakeNtf(item)" />
+                  <!-- <img src="../assets/img/ya.png" alt @click="checkDetail(3 , index)" /> -->
+                 </div>
+                 <!-- <div :class="['width3', dialogWidth == '90%' ? 'width3active' : '',]" v-else> -->
 <!--                    &lt;!&ndash; <img src="../assets/img/paimai.png" alt @click="check(1)" /> &ndash;&gt;-->
 <!--                    &lt;!&ndash; <img src="../assets/img/sell.png" alt  @click="checksell(2)"/> &ndash;&gt;-->
 <!--                    <img src="../assets/img/paimai.png" alt @click="checkDetail(1 , index)" />-->
@@ -105,7 +92,8 @@
 <!--&lt;!&ndash;-->
 <!--                    <img src="../assets/img/shichang.png" alt @click="checkDetail(1)" v-if="routeQuryDetail==2" />-->
 <!--                    <img src="../assets/img/sellD.png" alt @click="checkDetail(2)" v-if="routeQuryDetail==2" /> &ndash;&gt;-->
-<!--                  </div>-->
+                 <!-- </div> -->
+                 <!-- </div> -->
                 </div>
                 <!-- <div class="item">
                   <div
