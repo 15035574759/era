@@ -108,9 +108,9 @@ export async  function getBaseData(chainId,accounts,address){
   window.newVue.$store.commit("getChainId", chainId);
   window.newVue.$store.commit("getAddress", address);
   window.newVue.$store.commit("isConnected", true);
-  // window.newVue.$store.dispatch("getUserNtfs");
-  // window.newVue.$store.dispatch("getmarketNtfs");
-  // window.newVue.$store.dispatch("getFarmsLPPoolInfo");
-  // window.newVue.$store.dispatch("getFarmsNTFStake");
+  window.newVue.$store.dispatch("getUserNtfs");
+  window.newVue.$store.dispatch("getmarketNtfs");
+  window.newVue.$store.dispatch("getFarmsLPPoolInfo");
+  window.newVue.$store.dispatch("getFarmsNTFStake");
   
 }
