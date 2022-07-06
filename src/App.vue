@@ -317,20 +317,20 @@ export default {
     navItems () {
       return [
         { name: this.$t('nav-Home'), activeIndex: "/home", index: "1" },
-        { name: this.$t('nav-IDO'), activeIndex: "/ido", index: "6" },
+        { name: this.$t('nav-IDO'), activeIndex: "/ido", index: "2" },
         // {
         //   name: "Game Coin",
         //   activeIndex: "/home?id='part'",
         //   id: "part",
         //   index: "11",
         // },
-        { name: this.$t('nav-NFT'), activeIndex: "/blindbox", index: "2" },
-        { name: this.$t('nav-Market'), activeIndex: "/market", index: "3" },
+        { name: this.$t('nav-NFT'), activeIndex: "/blindbox", index: "3" },
+        { name: this.$t('nav-Market'), activeIndex: "/market", index: "4" },
         // { name: "Pledge Mining", activeIndex: "/arrowheads", index: "4" },
-        { name: this.$t('nav-Farms'), activeIndex: "/FARMS", index: "4" },
-        { name: this.$t('nav-AngelVillage'), activeIndex: "/market", index: "5" },
-        { name: this.$t('nav-RoadMap'), activeIndex: "/homepage", index: "6" },
-        { name: this.$t('nav-BuyAns'), activeIndex: '',  href: "https://pancakeswap.finance/swap", index: "7" },
+        { name: this.$t('nav-Farms'), activeIndex: "/FARMS", index: "5" },
+        { name: this.$t('nav-AngelVillage'), activeIndex: "/market", index: "6" },
+        { name: this.$t('nav-RoadMap'), activeIndex: "/homepage", index: "7" },
+        { name: this.$t('nav-BuyAns'), activeIndex: '',  href: "https://pancakeswap.finance/swap", index: "8" },
         // { name: "Contract" },
         // { name: "Backstage" }
       ];
