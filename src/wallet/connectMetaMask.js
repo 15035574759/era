@@ -61,9 +61,9 @@ export const connectInfoDetail = () => {
       return reject();
     }
     let address = accounts[0];
-    if(window.location.host === "localhost:8083") {
-      address = '0xDDF43F038A275beB88477e66E64aDb77f81B4a88';
-    }
+    // if(window.location.host === "localhost:8083") {
+    //   address = '0xDDF43F038A275beB88477e66E64aDb77f81B4a88';
+    // }
     const chainId = await ethereum.request({
       method: 'eth_chainId'
     });
