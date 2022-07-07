@@ -80,9 +80,9 @@
                   </div>
                   <div class="width2">{{item.id}}</div>
                   <div :class="['width3', dialogWidth == '90%' ? 'width3active' : '']" v-if="fatherType === 'FARMS'">
-                    <img v-if="!item.approve" src="../assets/img/ya_approve.png" alt @click="LPStakeNtfApprove(item)" /> 
-                    <img v-else src="../assets/img/ya.png" alt @click="LPStakeNtf(item)" />
-                    <!-- <img src="../assets/img/ya.png" alt @click="checkDetail(3 , index)" /> -->
+                    <!-- <img v-if="!item.approve" src="../assets/img/ya_approve.png" alt @click="LPStakeNtfApprove(item)" /> 
+                    <img v-else src="../assets/img/ya.png" alt @click="LPStakeNtf(item)" /> -->
+                    <img src="../assets/img/ya.png" alt @click="checkDetail(3 , index)" />
                  </div>
                  <!-- <div :class="['width3', dialogWidth == '90%' ? 'width3active' : '',]" v-else> -->
 <!--                    &lt;!&ndash; <img src="../assets/img/paimai.png" alt @click="check(1)" /> &ndash;&gt;-->
