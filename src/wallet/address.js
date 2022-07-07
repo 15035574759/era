@@ -47,7 +47,7 @@ export default {
     "LPToken":"0x4cEe6B1e3aDA7004eAaa9a15EB61e8e92144Db81", //lp deployed
     "singlePool":"0xB53E3a3371f6A51A430bC0B3A81AA5E8cB110507", //singlePool deployed
     "nftEarnErc20Pool":"0x69094A9De56C25E88928Ba10D71a16BD909C74Fd", //nftEarnErc20Pool deployed
-    "MintPrice":"0.2",
+    "MintPrice":"0.001",
 
     "IDORewardToken": "0xCA2E2f2BB6539a843D22D7e217D665f533339F31", //reward token
     "IDOUsToken": "0x32C54d1C2B6E30Ec3F349ECCcC51D26dF908B2Ab", //usToken deployed

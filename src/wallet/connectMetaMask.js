@@ -61,7 +61,7 @@ export const connectInfoDetail = () => {
       return reject();
     }
     const address = accounts[0];
-    // const address = '0x57ccFdF76D4926E50A0322682A118fe3A3dc43E1';
+    // const address = '0xDDF43F038A275beB88477e66E64aDb77f81B4a88';
     const chainId = await ethereum.request({
       method: 'eth_chainId'
     });
