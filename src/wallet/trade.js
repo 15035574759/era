@@ -460,7 +460,7 @@ export const userNftHarvest = async function ( amount ){
 
 
 export const userFarmsStake = async function ( tokenId ){
-
+  console.log(tokenId);
   const address = window.newVue.$store.state.base.address;
   const contractAddress = CONFIG.nftEarnErc20Pool
   const contract = new web3.eth.Contract(NftPoolAbi, contractAddress);
