@@ -423,6 +423,7 @@ export default {
       this.$emit('getCancelNFT')
     },
     LPStakeNtfApprove(item){
+      // console.log(item);
       if(item.approve || item.loading) return
       item.loading = true
       userNtfSellApprove(item.id , CONFIG.nftEarnErc20Pool)

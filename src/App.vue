@@ -294,6 +294,7 @@ export default {
       ],
       test: "0c57822fdsgfdbcv 435axcxd64767vsfgdfgvfd3455567qQ", //复制的内容
       language: 'en',
+      timer: null,
     };
   },
   computed: {
@@ -847,7 +848,7 @@ body {
   display: flex;
   //justify-content: flex-end;
   align-items: center;
-  margin-right: 30px;
+  // margin-right: 30px;
   text-align: right;
 }
 .box .heyue {

@@ -74,6 +74,7 @@ export default {
         // let url = await getBaseURI()
         commit('resetUserNtfs')
         let balance = await getBalanceOf()
+        // console.log(balance);
         balance = Number(balance)
         if(!isNaN(balance) && balance > 0){
           let ntfs = []
@@ -98,6 +99,7 @@ export default {
           }
           Promise.all(promiseList)
           .then(()=>{
+            // console.log(ntfs);
             commit('setUserNtfs' , {ntfs} )
           })
         }else {
