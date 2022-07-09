@@ -39,7 +39,7 @@ export const Mint =async function (nftName,  res){
     let tokenId = await getTokenId(balance); //获取TokenId
     let level = await getTokenLevel(tokenId); //获取NFT等级
     let power = CONFIG.nftPower(level);
-    console.log('balance' , balance);
+    // console.log('curId' , curId);
     console.log('level' , level);
     console.log('tokenId' , tokenId);
     console.log('power', power);
