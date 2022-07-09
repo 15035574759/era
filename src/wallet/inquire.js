@@ -71,14 +71,30 @@ export  const getTokenId = async function (index) {
   return ID;
 }
 
+export const getPower = async function (tokenId) {
+  const address = window.newVue.$store.state.base.address;
+  const contract = new web3.eth.Contract(DsgNftAbi, CONFIG.DsgNft);
+  let power = '0';
+  await contract.methods.getPower(tokenId).call(function (error, result) {
+    if (!error) {
+      power  = result
+      console.log('getPower' , result )
+    }else   {
+      console.log('TokenId_err',error)
+    }
+  });
+  return power;
+}
+
 
 export  const getTokenLevel = async function (tokenId) {
+  console.log(111);
   const contract = new web3.eth.Contract(DsgNftAbi, CONFIG.DsgNft);
   let ID = '0';
   await contract.methods.getNft(tokenId).call(function (error, result) {
     if (!error) {
       ID  = result.level
-      // console.log('TokenLevel' , result )
+      console.log('TokenLevel' , result )
     }else   {
       console.log('TokenLevel_err',error)
     }

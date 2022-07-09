@@ -57,6 +57,7 @@ export default {
   },
   mounted() {
     this.setDialogWidth();
+    console.log(this.level);
   },
   computed:{
     activeImgSrc(){

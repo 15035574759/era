@@ -10,7 +10,7 @@ import {
     toWei,
     toolNumber
   } from '@/utils/tool'
-import { getCurId } from './inquire'
+import { getCurId, getBalanceOf, getTokenId, getTokenLevel, getPower } from './inquire'
 import NtfPoolAbi from "./abis/EarnPool.json";
 import IDOAbi from "./abis/IDO.json";
 
@@ -27,15 +27,22 @@ export const Mint =async function (nftName,  res){
     // return
 
 
-    let curId = await getCurId()
-    //1000, 1500, 2500, 3500, 5000, 7000
-    const powerList = [1000, 1500, 2500, 3500, 5000, 7000]
-    let index = Number(curId) - 1000
-    if(isNaN(index) || index < 0) index = 0
-    let level = CURIDS[index].value
-    let power = powerList[level-1]
+    // let curId = await getCurId()
+    // //1000, 1500, 2500, 3500, 5000, 7000
+    // const powerList = [1000, 1500, 2500, 3500, 5000, 7000]
+    // let index = Number(curId) - 1000
+    // if(isNaN(index) || index < 0) index = 0
+    // let level = CURIDS[index].value
+    // let power = powerList[level-1]
+    let balance = await getBalanceOf()
+    balance = Number(balance) - 1;
+    let tokenId = await getTokenId(balance); //获取TokenId
+    let level = await getTokenLevel(tokenId); //获取NFT等级
+    let power = CONFIG.nftPower(level);
+    console.log('balance' , balance);
     console.log('level' , level);
-    console.log('power',power);
+    console.log('tokenId' , tokenId);
+    console.log('power', power);
     const address = window.newVue.$store.state.base.address;
     const contractAddress = CONFIG.DsgNft
     const contract = new web3.eth.Contract(DsgNftAbi, contractAddress);

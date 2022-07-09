@@ -74,7 +74,7 @@ export default {
         // let url = await getBaseURI()
         commit('resetUserNtfs')
         let balance = await getBalanceOf()
-        // console.log(balance);
+        console.log("balance:", balance);
         balance = Number(balance)
         if(!isNaN(balance) && balance > 0){
           let ntfs = []
@@ -82,8 +82,10 @@ export default {
           for(let i=0;i<balance;i++){
             promiseList.push(
               new Promise(async (resovle , reject)=>{
-                let tokenId = await getTokenId(i)
-                let level = await getTokenLevel(tokenId)
+                console.log("index:", i);
+                let tokenId = await getTokenId(i); //获取TokenId
+                let level = await getTokenLevel(tokenId) //获取NFT等级
+                console.log(tokenId, level);
                 ntfs.push({
                   id:tokenId,
                   level,
@@ -99,7 +101,7 @@ export default {
           }
           Promise.all(promiseList)
           .then(()=>{
-            // console.log(ntfs);
+            console.log(ntfs);
             commit('setUserNtfs' , {ntfs} )
           })
         }else {
