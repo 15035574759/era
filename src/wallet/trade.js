@@ -27,22 +27,25 @@ export const Mint =async function (nftName,  res){
     // return
 
 
-    // let curId = await getCurId()
-    // //1000, 1500, 2500, 3500, 5000, 7000
-    // const powerList = [1000, 1500, 2500, 3500, 5000, 7000]
-    // let index = Number(curId) - 1000
-    // if(isNaN(index) || index < 0) index = 0
-    // let level = CURIDS[index].value
-    // let power = powerList[level-1]
-    let balance = await getBalanceOf()
-    balance = Number(balance) - 1;
-    let tokenId = await getTokenId(balance); //获取TokenId
-    let level = await getTokenLevel(tokenId); //获取NFT等级
-    let power = CONFIG.nftPower(level);
+    let curId = await getCurId()
+    //1000, 1500, 2500, 3500, 5000, 7000
+    const powerList = [1000, 1500, 2500, 3500, 5000, 7000]
+    let index = Number(curId) - 1000
+    if(isNaN(index) || index < 0) index = 0
+    let level = CURIDS[index].value
+    let power = powerList[level-1]
+
+    // let balance = await getBalanceOf()
+    // console.log('balance' , balance);
+    // balance = Number(balance) > 0 ? Number(balance) - 1 : Number(balance);
+    // let tokenId = await getTokenId(0); //获取TokenId
+    // let level = await getTokenLevel(tokenId); //获取NFT等级
+    // let power = CONFIG.nftPower(level);
+
     // console.log('curId' , curId);
-    console.log('level' , level);
-    console.log('tokenId' , tokenId);
-    console.log('power', power);
+    // console.log('level' , level);
+    // console.log('tokenId' , tokenId);
+    // console.log('power', power);
     const address = window.newVue.$store.state.base.address;
     const contractAddress = CONFIG.DsgNft
     const contract = new web3.eth.Contract(DsgNftAbi, contractAddress);
@@ -80,9 +83,15 @@ export const Mint =async function (nftName,  res){
               hashInfo = hash
             }
           })
-          .on('receipt', function (receipt) {
+          .on('receipt', async function (receipt) {
+            console.log(receipt);
+            //获取最新的自增 NFT ID 以及 等级
+            let insertBalance = await getBalanceOf();
+            insertBalance = Number(insertBalance) > 0 ? Number(insertBalance) - 1 : Number(insertBalance);
+            let insertTokenId = await getTokenId(insertBalance); //获取TokenId
+            let insertLevel = await getTokenLevel(insertTokenId); //获取NFT等级
             window.newVue.$store.dispatch('changeTradeStatus' , { id:timestamp , val:1 , hash:hashInfo})
-            resolve(level)
+            resolve(insertLevel)
           })
           .on('error', function (err) {
             let isUserDeny = err.code === 4001

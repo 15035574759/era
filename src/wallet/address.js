@@ -41,18 +41,18 @@ export default {
     // "nftEarnErc20Pool":"0xc526CE97F6045839b1604Bd1c7217e48122103c7",
 
     "DSGToken":"0x1055E381E78197D5c43a0BBcA731AB73F64efe53",
-    "DsgNft":"0xdD79D8Bc4f05a34f5A04b0F3C123093Ff06E1A87", //DsgNft deployed
+    "DsgNft":"0x9eAD6119183E5Bc14Fa4A683808b1A7b3AfBcDb5", //DsgNft deployed
     "nftMarket":"0x25760bF19CC577ef012AB0c2dA033C8dFbcF3419",
     "fragmentToken":"0x15b0eE096Ea786160390d5cD7816801E5fed871d",
-    "LPToken":"0x6b1E2d78Cb12761914BC16E8c3c830c225C5c812", //lp deployed
-    "singlePool":"0xF1E3B56109890AbfA029f0Ec2F2dc7C3e3CDf215", //singlePool deployed
-    "nftEarnErc20Pool":"0x7D223f588d7b1eF9C7816E6C02BE2c9BB3A914Db", //nftEarnErc20Pool deployed
-    "MintPrice":"0.2",
+    "LPToken":"0x873f6f45CBD70fEcD342F5BdaF105dD41268D44F", //lp deployed
+    "singlePool":"0x83c7Fe53708143f79Ccd7B353836DA58aE528F0b", //singlePool deployed
+    "nftEarnErc20Pool":"0xDC85736D0970caD06Db43A7Ac8A6a26809122f75", //nftEarnErc20Pool deployed
+    "MintPrice":"0.001",
 
-    "IDORewardToken": "0xd102bA85F486898CFc41d101c8aE542EEF642FcA", //reward token
-    "IDOUsToken": "0x81670a4400547A60e7eD1241db2782cc9Abd0a58", //usToken deployed
-    "IDOToken": "0x3308d5C9489e2b7aeB5d55c5710847dC965C312f", //IDO deployed
-    "IDOInvitePool": "0x1e864dEc43d5fb10a69b38ef00fA73909c223b85", //invitePool deployed
+    "IDORewardToken": "0x9909c37CB530f91D73440B1fe40Bda5d05584e8b", //reward token
+    "IDOUsToken": "0x3A24E1D8912B6b44E4f30ec1630817B1FB100879", //usToken deployed
+    "IDOToken": "0x7b6bB13AE3B4CfE01bDA563701862d9eD52d541f", //IDO deployed
+    "IDOInvitePool": "0xb7f7a4dA63201aC2A388C7cfE5078Ee1C2Ac5F69", //invitePool deployed
     // "IDODsgNftDeployed": "0x79fEa54444BC0e4CC03fe2C32060434f5dAc2942", //直推合约地址
     nftImgSrc,
     nftName,
