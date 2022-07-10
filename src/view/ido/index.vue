@@ -833,7 +833,7 @@ export default {
       return window.location.origin + window.location.pathname + "#/ido?utm=" + this.inviteAddress;
     },
     extractStart() { //开始提取
-      if(!this.isStartExtract) {
+      if(!this.isStartExtract && this.extractDetailsName !== 'USDT') {
           this.$notify({
             message: "Not open for pickup",
             type: "warning",
