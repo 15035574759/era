@@ -126,12 +126,31 @@
         <p>{{ $t('home-yourFirstAngel-03') }}</p>
       </div>
       <div class="imgpart3">
-        <div class="scroll">
+        <div class="scroll" v-if="this.screenWidth >= 600">
           <img src="@/assets/img/c1.png" alt="" class="iconimg" />
           <img src="@/assets/img/c2.png" alt="" class="iconimg" />
           <img src="@/assets/img/c3.png" alt="" class="iconimg" />
           <img src="@/assets/img/c4.png" alt="" class="iconimg" />
           <img src="@/assets/img/c5.png" alt="" class="iconimg" />
+        </div>
+        <div v-else>
+          <el-carousel :interval="4000" type="card" height="200px">
+            <el-carousel-item>
+              <img src="@/assets/img/c1.png" alt="" class="iconimg" />
+            </el-carousel-item>
+            <el-carousel-item>
+              <img src="@/assets/img/c2.png" alt="" class="iconimg" />
+            </el-carousel-item>
+            <el-carousel-item>
+              <img src="@/assets/img/c3.png" alt="" class="iconimg" />
+            </el-carousel-item>
+            <el-carousel-item>
+              <img src="@/assets/img/c4.png" alt="" class="iconimg" />
+            </el-carousel-item>
+            <el-carousel-item>
+              <img src="@/assets/img/c5.png" alt="" class="iconimg" />
+            </el-carousel-item>
+          </el-carousel>
         </div>
       </div>
     </div>
@@ -634,6 +653,11 @@ export default {
   },
 };
 </script>
+<style>
+  .el-carousel__mask {
+    background-color: transparent;
+  }
+</style>
 <style scoped  lang="less" >
 .pcmain {
   background: rgba(19, 29, 23, 1);
