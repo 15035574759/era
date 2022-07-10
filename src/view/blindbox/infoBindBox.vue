@@ -10,17 +10,18 @@
           <el-col :xs="24" :md="6" :lg="6" :xl="6">
             <div    :class="['left', this.screenWidth >= 600 ? '' : 'leftmain']">
               <img :src="itemlist.icon" alt />
-              <p>{{itemlist.name}}</p>
+              <p>{{ $i18n.locale === 'en' ? itemlist.name : itemlist.name_ts }}</p>
             </div>
           </el-col>
           <el-col :xs="24" :md="16" :lg="16" :xl="16">
             <div class="right">
               <div class="info">
-                <h6>Introduction</h6>
-                <p>{{itemlist.info}}</p>
+                <h6>{{ $t('home-Introduction') }}</h6>
+                <p>{{ $i18n.locale === 'en' ? itemlist.info : itemlist.info_ts }}</p>
+                <p>{{$i18n.locale === 'en' ? itemlist.info_en : itemlist.info_ts }}</p>
               </div>
               <div class="count">
-                <h6>Attributes</h6>
+                <h6>{{ $t('home-Attributes') }}</h6>
                 <div
                   :class="['bj',this.screenWidth >= 600 ?'':'bj600']"
                   :style="`background: url(${bjIMg}) no-repeat center;background-size: contain;`"
@@ -28,17 +29,17 @@
                   <div class="item">
                     <img src="@/assets/img/shux1.png" alt />
                     <span>{{itemlist.countinfo}}</span>
-                    <p>Total Supply</p>
+                    <p>{{ $t('home-TotalSupply') }}</p>
                   </div>
                   <div class="item">
                     <img src="@/assets/img/shux2.png" alt />
-                    <span>ordinary</span>
-                    <p>Manufacturing grade</p>
+                    <span>{{ $t('home-ordinary') }}</span>
+                    <p>{{ $t('home-ManufacturingGrade') }}</p>
                   </div>
                   <div class="item">
                     <img src="@/assets/img/shux3.png" alt />
                     <span>LV.{{itemlist.level}}</span>
-                    <p>Rare level</p>
+                    <p>{{ $t('home-Rarelevel') }}</p>
                   </div>
 
                 </div>
@@ -184,5 +185,6 @@ export default {
   position: absolute;
   right: 26px;
   top: 26px;
+  cursor:pointer;
 }
 </style>
