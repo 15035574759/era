@@ -45,7 +45,7 @@ export default {
     "nftMarket":"0x25760bF19CC577ef012AB0c2dA033C8dFbcF3419",
     "fragmentToken":"0x15b0eE096Ea786160390d5cD7816801E5fed871d",
     "LPToken":"0x873f6f45CBD70fEcD342F5BdaF105dD41268D44F", //lp deployed
-    "singlePool":"0x83c7Fe53708143f79Ccd7B353836DA58aE528F0b", //singlePool deployed
+    "singlePool":"0x966bF7D1E046627E7F9983Bc12669dF01f5746c1", //singlePool deployed
     "nftEarnErc20Pool":"0xC5D9d1E2DBBA9a236F76e8F0C63b5552f582627D", //nftEarnErc20Pool deployed
     "MintPrice":"0.3",
 
