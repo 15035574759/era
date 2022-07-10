@@ -18,6 +18,7 @@ export default {
     'nav-MyNFT': 'My NFT',
     'nav-AngelVillage': 'Angel Village',
     'ido-Countdown': 'IDO Countdown',
+    'ido-TimeToStartIDO': 'Time to start IDO',
     'ido-Approved': 'Approved',
     'ido-Unapproved': 'Unapproved',
     'ido-Pay': 'Pay',

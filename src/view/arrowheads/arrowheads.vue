@@ -149,6 +149,7 @@ export default {
   },
   data() {
     return {
+      isStartExtract: false, //是否开始领取
       screenWidth: this.GLOBAL.clientWidth,
       showarrowItem: false, //arrowItem
       showarrowUp: false,
@@ -302,6 +303,13 @@ export default {
     },
     getConfirmNFT() {},
     harvest() {
+      if(!this.isStartExtract) {
+        this.$notify({
+          message: "Invite address is invalid",
+          type: "error",
+        });
+        return false;
+      }
       const harvestAmount = this.farmsNtfs.ans
       this.trading = true
       userNftHarvest(harvestAmount)

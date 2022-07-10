@@ -10,6 +10,7 @@ export default {
     'nav-MyNFT': '我的NFT',
     'nav-AngelVillage': '天使村',
     'ido-Countdown': 'IDO 倒計時',
+    'ido-TimeToStartIDO': '距離IDO開啟',
     'ido-Approved': '授权',
     'ido-Unapproved': '未授權',
     'ido-Pay': '支付',

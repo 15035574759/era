@@ -5,7 +5,8 @@
         class="banner"
         :style="`background-image: url(${bannerbjIMg});background-size: cover;`"
       >
-        <div class="ido-countdown">{{ $t('ido-Countdown') }}</div>
+        <!-- <div class="ido-countdown">{{ $t('ido-Countdown') }}</div> -->
+        <div class="ido-countdown">{{ $t('ido-TimeToStartIDO') }}</div>
         <div class="countdown">
           <div>{{ day + "d" }}</div>
           <div>{{ hr + "h" }}</div>
@@ -63,7 +64,7 @@
             <div class="input" style="width: 100%">
               <el-input v-model="ansObtainedAmount" placeholder="0.00" :readonly="true">
                 <div slot="prefix" class="ans-obtained">ANS {{ $t('ido-obtained') }}</div>
-                <div slot="suffix" v-if="isStartExtract" @click="IDOExtractClick()" class="extract">{{ $t('ido-Extract') }}</div>
+                <div slot="suffix" @click="IDOExtractClick()" class="extract">{{ $t('ido-Extract') }}</div>
                 <!-- &nbsp;&nbsp; -->
                 <!-- <div slot="suffix" class="details" @click="IDODetailsClick()">{{ $t('ido-Details') }}</div> -->
               </el-input>
@@ -95,7 +96,7 @@
                 <!-- <div slot="suffix" class="details" @click="ANSRewardDetailsClick()">{{ $t('ido-Details') }}</div> -->
               </el-input>
             </div>
-            <div class="" v-if="isStartExtract">
+            <div class="">
               <div class="extract-max" @click="ANSExtractClick()">{{ $t('ido-Extract') }}</div>
             </div>
           </div>
@@ -705,7 +706,7 @@ export default {
   data() {
     return {
       screenWidth: this.GLOBAL.clientWidth,
-      countDate: "2022-07-02 16:36:00",
+      countDate: "2022-07-13 16:00:00",
       isStartExtract: false, //是否开始领取
       bannerbjIMg:
         this.GLOBAL.clientWidth >= 600
@@ -832,6 +833,13 @@ export default {
       return window.location.origin + window.location.pathname + "#/ido?utm=" + this.inviteAddress;
     },
     extractStart() { //开始提取
+      if(!this.isStartExtract) {
+          this.$notify({
+            message: "Not open for pickup",
+            type: "warning",
+          });
+        return false;
+      }
       let _contractName = '';
       if(this.extractAmountValue <= 0) {
         // this.$notify({
@@ -1046,7 +1054,7 @@ export default {
         if (countTime <= 0) {
           // 计时结束，清除缓存
           clearInterval(this._interval);
-          this.isStartExtract = true;
+          // this.isStartExtract = true;
         } else {
           countTime--;
           let day = parseInt(countTime / 1000 / 60 / 60 / 24);
