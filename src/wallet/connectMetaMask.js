@@ -10,8 +10,8 @@ export const connectInfo = async () => {
     try {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: web3.utils.numberToHex(256)  }], 
-        // params: [{ chainId: '0x38'  }], 
+        // params: [{ chainId: web3.utils.numberToHex(256)  }], 
+        params: [{ chainId: '0x38'  }], 
       });
       connectInfoDetail()
     } catch (error) {
@@ -24,8 +24,8 @@ export const connectInfo = async () => {
               {
                 chainId: web3.utils.numberToHex(256),
                 // chainId: '0x38',
-                // rpcUrl: 'https://bsc-dataseed.binance.org/',
-                rpcUrl: 'https://http-testnet.hecochain.com',
+                rpcUrl: 'https://bsc-dataseed.binance.org/',
+                // rpcUrl: 'https://http-testnet.hecochain.com',
               },
             ],
           });
