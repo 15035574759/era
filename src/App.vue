@@ -40,7 +40,7 @@
           </el-menu> -->
           <ul class="menu">
             <li
-              :class="{'active':defaultOpeneds == item.index,'notAllowed':item.index==4 || item.index==6}"
+              :class="{'active':defaultOpeneds == item.index,'notAllowed':item.index==6}"
               @click="activeNavabs(key , item.href)"
               v-for="(item, key) in leftNavItems"
               :key="key"
@@ -326,7 +326,8 @@ export default {
         //   index: "11",
         // },
         { name: this.$t('nav-NFT'), activeIndex: "/blindbox", index: "3" },
-        { name: this.$t('nav-Market'), activeIndex: "/market", index: "4" },
+        // { name: this.$t('nav-Market'), activeIndex: "/market", index: "4" },
+        { name: this.$t('nav-Market'), activeIndex: "", href: "https://tofunft.com/collection/angel-valley-medal-of-freedom/items", index: "4" },
         // { name: "Pledge Mining", activeIndex: "/arrowheads", index: "4" },
         { name: this.$t('nav-Farms'), activeIndex: "/FARMS", index: "5" },
         { name: this.$t('nav-AngelVillage'), activeIndex: "/market", index: "6" },
@@ -689,7 +690,7 @@ body {
   text-align: center;
   cursor: pointer;
   font-size: .2rem;
-  margin-left: 50px;
+  margin-left: 40px;
 }
 .menu li.active {
   position: relative;
