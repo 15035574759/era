@@ -48,7 +48,7 @@ export default {
     'ido-MedalFreedom-05': '5. Directly push 25 IDOs to get a Level 5 Angel Valley Medal of Freedom',
     'ido-MedalFreedom-06': '6. Directly push 30 IDOs to get a Level 6 Angel Valley Medal of Freedom',
     'ido-MedalFreedom-07': '7. Directly push 35 IDOs to get a Level 7 Angel Valley Medal of Freedom',
-    'ido-MedalFreedom-08': '8. The Angel Valley Medal of Freedom NFT is limited to 3,000 pieces on the entire network. Holders of the Angel Valley Freedom Medal can also get exclusive Angel Village land.',
+    'ido-MedalFreedom-08': '8. The Angel Valley Medal of Freedom NFT is limited to 2,000 pieces on the entire network. Holders of the Angel Valley Freedom Medal can also get exclusive Angel Village land.',
     'ido-badge-05': 'Force Badge',
     'ido-badge-10': 'Magic Badge',
     'ido-badge-15': 'Spirit Badge',

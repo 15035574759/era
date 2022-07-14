@@ -40,7 +40,7 @@ export default {
     'ido-MedalFreedom-05': '5.直推25個IDO獲得5級天使谷自由勳章',
     'ido-MedalFreedom-06': '6.直推30個IDO獲得6級天使谷自由勳章',
     'ido-MedalFreedom-07': '7.所有的天使谷自由勳章可以參與NFT挖礦',
-    'ido-MedalFreedom-08': '8.天使谷自由勳章NFT全網限量3000枚, 天使谷自由勳章持有者還可以獲得專屬天使村土地。',
+    'ido-MedalFreedom-08': '8.天使谷自由勳章NFT全網限量2000枚, 天使谷自由勳章持有者還可以獲得專屬天使村土地。',
     'ido-badge-05': '力量徽章',
     'ido-badge-10': '魔法徽章',
     'ido-badge-15': '精神徽章',

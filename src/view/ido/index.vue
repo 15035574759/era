@@ -706,7 +706,7 @@ export default {
   data() {
     return {
       screenWidth: this.GLOBAL.clientWidth,
-      countDate: "2022-07-15 16:00:00",
+      countDate: "2022-07-16 16:00:00",
       isStartExtract: false, //是否开始领取
       bannerbjIMg:
         this.GLOBAL.clientWidth >= 600
