@@ -36,7 +36,7 @@
         </div>
 
         <div class="btnBox">
-          <div class="bannerbtn1" @click="toWhitPaper">IDO</div>
+          <div class="bannerbtn1" @click="toWhitPaper">IVO</div>
           <div class="bannerbtn2" @click="goNFT">Mint</div>
           <!-- <img src="@/assets/img/bannerbtn1.png" alt="" @click="toWhitPaper" /> -->
           <!-- <img src="@/assets/img/bannerbtn2.png" alt="" @click="goNFT" /> -->

@@ -61,7 +61,7 @@
         ></el-col>
         <el-col :span="screenWidth >= 600 ? 12 : 24">
           <div class="right">
-            <div style="text-align: center;color:#70F4A5;">IDO</div>
+            <div style="text-align: center;color:#70F4A5;">IVO</div>
             <div class="input" style="width: 100%">
               <el-input v-model="ansObtainedAmount" placeholder="0.00" :readonly="true">
                 <div slot="prefix" class="ans-obtained">ANS {{ $t('ido-obtained') }}</div>
@@ -151,7 +151,7 @@
                   width="20"
                 />
               </div> -->
-              <div style="padding-bottom: 10px">IDO {{ $t('ido-pushed') }}: {{ inviteNumber }}</div>
+              <div style="padding-bottom: 10px">IVO {{ $t('ido-pushed') }}: {{ inviteNumber }}</div>
               <!-- <div style="color:#70F4A5;font-weight: 800;font-size:24px"> {{ countNFTReward }} </div> -->
             </div>
             <div class="details-button">
@@ -240,7 +240,7 @@
           <el-col :span="screenWidth >= 600 ? 12 : 24">
             <div class="bottom-box">
               <div class="left">
-                <font color="#70F4A5">IDO {{ $t('ido-Rule') }}</font>
+                <font color="#70F4A5">IVO {{ $t('ido-Rule') }}</font>
                 <div class="botimg">
                   <div>
                     <img src="@/assets/img/ido/ans.png" alt="" srcset="">
@@ -870,7 +870,7 @@ export default {
       });
     },
     IDOExtractClick() { //点击IDO提取
-      this.extractDetailsName = "IDO";
+      this.extractDetailsName = "IVO";
       this.extractBalance = this.ansObtainedAmount;
       this.extractShow = true;
       this.extractAmountValue = 0;
