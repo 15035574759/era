@@ -22,15 +22,16 @@
               <div class="approved-yes-img"></div>
               <!-- <img src="@/assets/img/ido/approved-yes.png" alt :width="this.screenWidth >= 600 ? 100 : 90" /> -->
               <span>{{$t('ido-Approved')}}</span>&nbsp;&nbsp;
-              <div v-loading="payLoading" v-if="!isPay" :class="['pay-yes', payLoading ? 'events-none' : '']" @click="payUsdtOrANS()">{{ $t('ido-Pay') }}</div>
-              <div v-else class="pay-no">{{ $t('ido-Pay') }}</div>
+              <div v-loading="payLoading" v-if="!isPay" :class="['pay-yes', payLoading ? 'events-none' : '']" @click="payUsdtOrANS()">{{ $t('ido-Pay') }} 100USDT</div>
+              <!-- <div v-else class="pay-no">{{ $t('ido-Pay') }}</div> -->
+              <div v-else class="pay-no">{{ $t('ido-Pay') }} 100USDT</div>
             </div>
             <div class="approved-pay" v-else>
               <div class="approved-no-img"></div>
               <!-- <img src="@/assets/img/ido/approved-no.png" alt :width="this.screenWidth >= 600 ? 100 : 90" /> -->
               <span style="color: #ffffff">{{ $t('ido-Unapproved') }}</span>&nbsp;&nbsp;
-              <div v-loading="approvedLoading" v-if="!isPay" :class="['pay-yes', approvedLoading ? 'events-none' : '']" @click="startApprove()">{{ $t('ido-Approved') }}</div>
-              <div v-else class="pay-no">{{ $t('ido-Pay') }}</div>
+              <div v-loading="approvedLoading" v-if="!isPay" :class="['pay-yes', approvedLoading ? 'events-none' : '']" @click="startApprove()">{{ $t('ido-Approved') }} 100USDT</div>
+              <div v-else class="pay-no">{{ $t('ido-Pay') }} 100USDT</div>
             </div>
             <div class="approved-pay-steps">
               <div class="steps">
@@ -1253,7 +1254,7 @@ export default {
               color: #333;
               text-align: center;
               cursor: pointer;
-              font-size: 16px;
+              font-size: 12px;
             }
             .pay-no {
               background: url(../../assets/img/ido/pay-no.png) no-repeat center;
