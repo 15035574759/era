@@ -64,8 +64,8 @@ export default new Router({
       component: resolve => require(['../view/farms/farms'], resolve),
     }, 
     {
-      path: '/ido',
-      name: 'ido',
+      path: '/ivo',
+      name: 'ivo',
       component: resolve => require(['../view/ido/index'], resolve),
     
     }, 

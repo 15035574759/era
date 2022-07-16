@@ -318,7 +318,7 @@ export default {
     navItems () {
       return [
         { name: this.$t('nav-Home'), activeIndex: "/home", index: "1" },
-        { name: this.$t('nav-IDO'), activeIndex: "/ido", index: "2" },
+        { name: this.$t('nav-IDO'), activeIndex: "/ivo", index: "2" },
         // {
         //   name: "Game Coin",
         //   activeIndex: "/home?id='part'",

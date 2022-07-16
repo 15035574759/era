@@ -701,7 +701,7 @@ export default {
     }),
     utmAddress(){
         // return window.origin + `/#/ido?utm=${this.address}`
-        return window.location.origin + window.location.pathname + `/#/ido?utm=${this.address}`
+        return window.location.origin + window.location.pathname + `/#/ivo?utm=${this.address}`
     }
   },
   data() {
@@ -831,7 +831,7 @@ export default {
   },
   methods: {
     utmAddressHref() {
-      return window.location.origin + window.location.pathname + "#/ido?utm=" + this.inviteAddress;
+      return window.location.origin + window.location.pathname + "#/ivo?utm=" + this.inviteAddress;
     },
     extractStart() { //开始提取
       if(!this.isStartExtract && this.extractDetailsName !== 'USDT') {

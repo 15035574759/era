@@ -516,7 +516,7 @@ export default {
     },
     toWhitPaper(){
       this.$router.push({
-        path: "/ido",
+        path: "/ivo",
       });
       // window.open('http://www.angelvalleymetaverse.com/AngelValley.pdf' ,'_blank')
     },
