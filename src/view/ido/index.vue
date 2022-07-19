@@ -5,8 +5,8 @@
         class="banner"
         :style="`background-image: url(${bannerbjIMg});background-size: cover;`"
       >
-        <!-- <div class="ido-countdown">{{ $t('ido-Countdown') }}</div> -->
-        <div class="ido-countdown">{{ $t('ido-TimeToStartIDO') }}</div>
+        <div class="ido-countdown">{{ $t('ido-Countdown') }}</div>
+        <!-- <div class="ido-countdown">{{ $t('ido-TimeToStartIDO') }}</div> -->
         <div class="countdown">
           <div>{{ day + "d" }}</div>
           <div>{{ hr + "h" }}</div>
@@ -707,7 +707,7 @@ export default {
   data() {
     return {
       screenWidth: this.GLOBAL.clientWidth,
-      countDate: "2022-07-19 16:00:00",
+      countDate: "2022-08-03 16:00:00",
       isStartExtract: false, //是否开始领取
       bannerbjIMg:
         this.GLOBAL.clientWidth >= 600
